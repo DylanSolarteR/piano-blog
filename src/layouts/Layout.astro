@@ -1,22 +1,134 @@
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/intro.mp4"
+      as="video"
+      type="video/mp4"
+      fetchpriority="high"
+    />
+    <title>Dylan's Piano Blog</title>
+  </head>
+  <body>
+    <div id="video-container">
+      <video
+        id="intro-video"
+        src="/Intro.mp4"
+        autoplay
+        muted
+        playsinline
+        preload="auto"></video>
+    </div>
+    <slot />
+
+    <script is:inline>
+      window.addEventListener("DOMContentLoaded", () => {
+        // Prevent scrolling while the intro video is playing
+        document.body.style.overflow = "hidden";
+
+        const video = document.getElementById("intro-video");
+        const videoContainer = document.getElementById("video-container");
+        if (!video) return;
+
+        video.addEventListener("timeupdate", () => {
+          if (video.currentTime >= 3.35) {
+            videoContainer.style.backgroundColor = "black";
+            video.removeEventListener("timeupdate", this);
+          }
+        });
+
+        video.addEventListener("ended", () => {
+          document.body.style.overflow = "auto";
+          videoContainer.style.display = "none";
+        });
+      });
+    </script>
+  </body>
 </html>
 
+<style is:global>
+  @font-face {
+    font-family: "Caudex";
+    src: url("/fonts/caudex-v19-latin-regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Caudex";
+    src: url("/fonts/caudex-v19-latin-700.woff2") format("woff2");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Caudex";
+    src: url("/fonts/caudex-v19-latin-italic.woff2") format("woff2");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Caudex";
+    src: url("/fonts/caudex-v19-latin-700italic.woff2") format("woff2");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  *,
+  *::before,
+  *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: inherit;
+  }
+</style>
+
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100vh;
+    background-color: oklch(0% 0 0);
+    padding: 0;
+
+    font-family: "Caudex", sans-serif;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  #video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    transition: background-color 0.2s linear;
+  }
+
+  #intro-video {
+    width: auto;
+    height: 100vh;
+  }
 </style>
