@@ -14,7 +14,7 @@
     <title>Dylan's Piano Blog</title>
   </head>
   <body>
-    <div id="video-container">
+    <!-- <div id="video-container">
       <video
         id="intro-video"
         src="/Intro.mp4"
@@ -22,10 +22,10 @@
         muted
         playsinline
         preload="auto"></video>
-    </div>
+    </div> -->
     <slot />
 
-    <script is:inline>
+    <!-- <script is:inline>
       window.addEventListener("DOMContentLoaded", () => {
         // Prevent scrolling while the intro video is playing
         document.body.style.overflow = "hidden";
@@ -46,7 +46,7 @@
           videoContainer.style.display = "none";
         });
       });
-    </script>
+    </script> -->
   </body>
 </html>
 
