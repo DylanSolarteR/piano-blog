@@ -1,0 +1,93 @@
+---
+
+---
+
+<main id="next_songs_container">
+  <h2 id="ns-intro-text">Here’s what i’m willing to learn next.</h2>
+  <div id="ns-background">
+    <div class="bg-rect"></div>
+    <div class="bg-rect"></div>
+    <div class="bg-rect"></div>
+    <div class="bg-rect"></div>
+  </div>
+</main>
+
+<style>
+  .next_songs {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  #next_songs_container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  #ns-intro-text {
+    font-size: 6rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    text-wrap: balance;
+    z-index: 0;
+  }
+
+  #ns-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    z-index: 1;
+  }
+  #ns-background .bg-rect {
+    width: 100%;
+    height: 25%;
+    background-color: white;
+    position: relative;
+    z-index: 1;
+    scrollbar-width: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #ns-background .bg-rect::after {
+    content: "";
+    display: block;
+    height: calc(100% / sqrt(2));
+    aspect-ratio: 1 / 1;
+    transform: translateX(50%) rotate(45deg);
+    background-color: white;
+  }
+
+  #ns-background .bg-rect::before {
+    content: "";
+    display: block;
+    height: calc(100% / sqrt(2));
+    aspect-ratio: 1 / 1;
+    transform: translateX(-50%) rotate(45deg);
+    background-color: white;
+  }
+
+  #ns-background .bg-rect:nth-of-type(2n) {
+    transform: translateX(125%);
+  }
+  #ns-background .bg-rect:nth-of-type(2n + 1) {
+    transform: translateX(-125%);
+  }
+</style>
