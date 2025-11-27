@@ -1,0 +1,72 @@
+---
+import ArrowSVG from "../../assets/svg/vectorarrow.svg";
+
+import PianoWithHands from "../../assets/svg/Piano_with_hands.svg";
+---
+
+<div class="repertory">
+  <h2 class="text_right">Please, listen to the pieces i’ve learned.</h2>
+  <a class="hipervinculo_repertorio"
+    ><span>Repertory</span><ArrowSVG
+      width={50}
+      height={50}
+      class="arrow_right"
+    />
+  </a>
+  <PianoWithHands id="piano_with_hands" preserveAspectRatio="none" />
+</div>
+
+<style>
+  .repertory {
+    position: relative;
+    max-width: 100vw;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: end;
+    gap: 4rem;
+    padding: 28rem 0rem;
+  }
+
+  #piano_with_hands {
+    width: 110%;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    translate: -10% 0%;
+  }
+
+  .text_right {
+    font-size: 8rem;
+    font-weight: bold;
+    max-width: 65%;
+    color: white;
+    z-index: 1;
+    text-align: end;
+    text-wrap: balance;
+    align-self: end;
+  }
+
+  .hipervinculo_repertorio {
+    color: white;
+    vertical-align: middle;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    gap: 1rem;
+  }
+
+  .hipervinculo_repertorio > .arrow_right {
+    width: 40px;
+    height: 40px;
+    translate: 0px 5px;
+  }
+
+  .hipervinculo_repertorio:hover {
+    text-decoration: underline;
+  }
+</style>

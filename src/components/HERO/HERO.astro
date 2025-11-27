@@ -1,0 +1,24 @@
+---
+import HeroSVG from "./HeroSVG.astro";
+import Compas from "./Compas.astro";
+import ArrowSVG from "../../assets/svg/vectorarrow.svg";
+---
+
+<header id="hero">
+  <Compas>
+    <HeroSVG />
+  </Compas>
+  <ArrowSVG width={50} height={50} class="arrow_down" />
+</header>
+
+<style>
+  #hero {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 4rem;
+  }
+</style>
