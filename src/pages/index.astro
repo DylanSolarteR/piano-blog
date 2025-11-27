@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
 import HERO from "../components/HERO/HERO.astro";
 import AboutMe from "../components/ABOUTME/Aboutme.astro";
 import RepIndex from "../components/REPERTORY/RepIndex.astro";
 import Nextsongs from "../components/NEXTSONGS/Nextsongs.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Layout>
@@ -19,6 +19,7 @@ import Nextsongs from "../components/NEXTSONGS/Nextsongs.astro";
     <section>
       <Nextsongs />
     </section>
+    <Footer />
   </main>
 </Layout>
 
@@ -30,13 +31,21 @@ import Nextsongs from "../components/NEXTSONGS/Nextsongs.astro";
     justify-content: start;
     align-items: center;
     flex-direction: column;
-    gap: 16rem;
+    background-color: black;
+    z-index: 0;
   }
 
   section {
     width: 100%;
     height: fit-content;
     max-width: 100%;
+    margin-top: 20rem;
+  }
+
+  #footer-mask {
+    width: 100%;
+    min-height: 20vh;
+    background-color: transparent;
   }
 </style>
 
@@ -71,5 +80,29 @@ import Nextsongs from "../components/NEXTSONGS/Nextsongs.astro";
   }
   .arrow_right {
     transform: rotate(270deg);
+  }
+
+  .a-link{
+    display: block;
+    position: relative;   
+  }
+
+  .a-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1em;
+    background-color: white;
+    opacity 1;
+    transform: scale(0);
+    transform-origin: center;
+    transition: opacity 300ms, transform 300ms;
+  }
+
+  .a-link:hover::after,
+  .a-link:focus::after {
+    transform: scale(1);
   }
 </style>
