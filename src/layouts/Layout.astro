@@ -1,20 +1,31 @@
+---
+import { ClientRouter } from "astro:transitions";
+---
+
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link
-      rel="preload"
-      href="/intro.mp4"
-      as="video"
-      type="video/mp4"
-      fetchpriority="high"
-    />
+    <!-- <link
+    rel="preload"
+    href="/intro.mp4"
+    as="video"
+    type="video/mp4"
+    fetchpriority="high"
+    /> -->
     <title>Dylan's Piano Blog</title>
+    <meta name="title" content="Dylan's Piano Blog" />
+    <meta
+      name="description"
+      content="A blog about my piano progress and performances."
+    />
+
+    <ClientRouter />
   </head>
   <body>
-    <!-- <div id="video-container">
+    <div id="video-container">
       <video
         id="intro-video"
         src="/Intro.mp4"
@@ -22,10 +33,10 @@
         muted
         playsinline
         preload="auto"></video>
-    </div> -->
+    </div>
     <slot />
 
-    <!-- <script is:inline>
+    <script is:inline>
       window.addEventListener("DOMContentLoaded", () => {
         // Prevent scrolling while the intro video is playing
         document.body.style.overflow = "hidden";
@@ -44,9 +55,12 @@
         video.addEventListener("ended", () => {
           document.body.style.overflow = "auto";
           videoContainer.style.display = "none";
+
+          window.dispatchEvent(new Event("intro-video-ended"));
         });
       });
-    </script> -->
+    </script>
+    <script src="../scripts/gsap_init.tsx"></script>
   </body>
 </html>
 
@@ -132,3 +146,30 @@
     height: 100vh;
   }
 </style>
+
+<!-- <script>
+  let ctx: gsap.Context | null = null;
+  let wantToInitialize = false;
+
+  document.addEventListener(
+    "astro:page-load",
+    () => {
+      const currentPath = window.location.pathname;
+      wantToInitialize = currentPath === "/";
+
+      if (wantToInitialize) {
+        ctx = gsap.context(() => {});
+
+        ctx?.add(() => {});
+      }
+    },
+    { once: false }
+  );
+
+  document.addEventListener("astro:after-swap", () => {
+    if (ctx != null) {
+      ctx?.revert();
+      ctx = null;
+    }
+  });
+</script>  -->

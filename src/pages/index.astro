@@ -23,6 +23,112 @@ import Footer from "../components/Footer.astro";
   </main>
 </Layout>
 
+<script>
+  import { init_gsap_context, clear_gsap_context } from "../scripts/gsap_init.tsx";
+  let wantToInitialize = false;
+
+  document.addEventListener(
+    "astro:page-load",
+    () => {
+      const currentPath = window.location.pathname;
+      wantToInitialize = currentPath === "/";
+      if (wantToInitialize) {
+        const gsap_ctx = init_gsap_context();
+
+        gsap_ctx?.add(() => {
+
+          // Animaciones
+          const master_tl = gsap.timeline({paused: true});
+          const hero_tl = gsap.timeline();
+
+          window.addEventListener("intro-video-ended", () => {
+            master_tl.play();
+          });
+
+          hero_tl.fromTo("#vertical_line", {
+            height: "0%",
+          }, {
+            height: "100%",
+            duration: 1,
+            ease: "power2.inOut",
+          }),
+
+          hero_tl.fromTo(
+            "#horizontal_lines .horizontal_line",
+            { width: "0%" },
+            {
+              width: "100%",
+              duration: 1,
+              stagger: 0.2,
+              ease: "power2.inOut",
+            }
+          );
+
+          hero_tl.fromTo(
+            "#ClaveSol",
+            { opacity: 0, y: 100 },
+            {
+              opacity: 1,
+              duration: 2,
+              y: 70,
+              ease: "power2.inOut",
+            }
+          );
+
+          hero_tl.fromTo(
+            ".title-text path",
+            { strokeDashoffset: gsap.getProperty(".title-text path", "strokeDasharray") },
+            {
+              strokeDashoffset: 0,
+              duration: 3,
+              stagger: 0.2,
+              ease: "power2.inOut",
+            }, "<"
+          );
+          hero_tl.fromTo(
+            ".title-text path",
+            { fill: "transparent" },
+            {
+              fill: "white",
+              duration: 2,
+              stagger: 0.1,
+              ease: "power2.inOut",
+            }, "<1.5"
+          );
+
+          hero_tl.fromTo(
+            "#arrow_down_hero",
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 2,
+              ease: "power2.out",
+            }
+          , ">-1"
+        );
+
+          hero_tl.to("#arrow_down_hero", {
+            y: 15,
+            repeat: -1,
+            yoyo: true,
+            ease: "power1.inOut",
+            duration: 1,
+          });
+          master_tl.add(hero_tl);
+        });
+      }
+    },
+    { once: false }
+  );
+
+  document.addEventListener("astro:after-swap", () => {
+    clear_gsap_context();
+  });
+
+  
+</script>
+
 <style>
   #main-container {
     height: 100vh;
