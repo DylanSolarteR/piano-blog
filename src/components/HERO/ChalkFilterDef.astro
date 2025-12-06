@@ -1,0 +1,32 @@
+<defs>
+  <filter id="chalkStroke" x="-20%" y="-20%" width="140%" height="140%">
+    <!-- Ruido para irregularidad del trazo -->
+    <feTurbulence
+      type="fractalNoise"
+      baseFrequency="1.2"
+      numOctaves="2"
+      seed="3"
+      result="noise"></feTurbulence>
+    <!-- Deformar el trazo con el ruido (bordes “dibujados a mano”) -->
+    <feDisplacementMap
+      in="SourceGraphic"
+      in2="noise"
+      scale="2"
+      xChannelSelector="R"
+      yChannelSelector="G"
+      result="rough"></feDisplacementMap>
+    <!-- Suavizar un poco, look polvo de tiza -->
+    <feGaussianBlur in="rough" stdDeviation="1" result="soft"></feGaussianBlur>
+
+    <!-- Usar el ruido como grain que rompe el trazo -->
+    <feColorMatrix in="noise" type="luminanceToAlpha" result="alphaNoise"
+    ></feColorMatrix>
+    <feComponentTransfer in="alphaNoise" result="grain">
+      <!-- ajusta estos valores para que la tiza se vea más rota o más sólida -->
+      <feFuncA type="gamma" amplitude="3" exponent="2" offset="0"></feFuncA>
+    </feComponentTransfer>
+
+    <!-- Recortar el trazo suave con el grain -->
+    <feComposite in="soft" in2="grain" operator="in"></feComposite>
+  </filter>
+</defs>

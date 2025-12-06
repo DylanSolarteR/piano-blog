@@ -10,6 +10,7 @@ import Footer from "../components/Footer.astro";
 <Layout>
   <main id="main-container">
     <HERO />
+    <div id="light-beam"></div>
     <section>
       <AboutMe />
     </section>
@@ -65,14 +66,14 @@ import Footer from "../components/Footer.astro";
           );
 
           hero_tl.fromTo(
-            "#ClaveSol",
-            { opacity: 0, y: 100 },
+            ".clave-svg-path",
+            { strokeDashoffset: gsap.getProperty(".clave-svg-path", "strokeDasharray") },
             {
-              opacity: 1,
-              duration: 2,
-              y: 70,
+              strokeDashoffset: 0,
+              duration: 4,
               ease: "power2.inOut",
-            }
+            },
+            ">"
           );
 
           hero_tl.fromTo(
@@ -85,15 +86,28 @@ import Footer from "../components/Footer.astro";
               ease: "power2.inOut",
             }, "<"
           );
+
+          // Luz
           hero_tl.fromTo(
-            ".title-text path",
+            "#light-beam",
+            { opacity: 0},
+            {
+              opacity: 1,
+              duration: 1.2,
+              ease: "power3.out"
+            },
+            "<"
+          )
+
+          hero_tl.fromTo(
+            ".clave-svg-path, .title-text path",
             { fill: "transparent" },
             {
               fill: "white",
               duration: 2,
-              stagger: 0.1,
               ease: "power2.inOut",
-            }, "<1.5"
+            },
+            ">"
           );
 
           hero_tl.fromTo(
@@ -130,7 +144,51 @@ import Footer from "../components/Footer.astro";
 </script>
 
 <style>
+  
+  #light-beam {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform-origin: top center;
+    opacity: 0;
+  }
+
+  #light-beam::before,
+  #light-beam::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Luz blanca fuerte en la parte superior */
+  #light-beam::before {
+    background:
+      radial-gradient(
+        circle at 110% -60%,
+        rgba(255,255,255,0.5) 0%,
+        rgba(255,255,255,0.4) 8%,
+        rgba(255,255,255,0.2) 12%,
+        rgba(255,255,255,0.05) 45%,
+        rgba(0,0,0,0) 70%
+      );
+    mix-blend-mode: screen;
+  }
+
+  #light-beam::after {
+    background:
+      radial-gradient(
+        circle at -10% -40%,
+        rgba(255,255,255,0.5) 0%,
+        rgba(255,255,255,0.4) 8%,
+        rgba(255,255,255,0.2) 12%,
+        rgba(255,255,255,0.0) 45%,
+        rgba(0,0,0,0) 70%
+      );
+    mix-blend-mode: screen;
+  }
+
   #main-container {
+    position: relative;
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -139,6 +197,7 @@ import Footer from "../components/Footer.astro";
     flex-direction: column;
     background-color: black;
     z-index: 0;
+    color: #fff;
   }
 
   section {
