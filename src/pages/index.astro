@@ -11,7 +11,7 @@ import Footer from "../components/Footer.astro";
   <main id="main-container">
     <HERO />
     <div id="light-beam"></div>
-    <section>
+    <section id="about_me_section">
       <AboutMe />
     </section>
     <section>
@@ -41,11 +41,12 @@ import Footer from "../components/Footer.astro";
           // Animaciones
           const master_tl = gsap.timeline({paused: true});
           const hero_tl = gsap.timeline();
+          const about_me_tl = gsap.timeline();
 
           window.addEventListener("intro-video-ended", () => {
             master_tl.play();
           });
-
+          // Hero Animations
           hero_tl.fromTo("#vertical_line", {
             height: "0%",
           }, {
@@ -129,7 +130,132 @@ import Footer from "../components/Footer.astro";
             ease: "power1.inOut",
             duration: 1,
           });
+
+          hero_tl.to("#hero", {
+            opacity: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: "#hero",
+              start: "top top",
+              end: "bottom center",
+              scrub: true,
+            },
+          });
           master_tl.add(hero_tl);
+
+          //About Me Animations
+          let about_me_text: HTMLElement[] = gsap.utils.toArray("#abme_text_container .text_right_about_me");
+
+          about_me_text.forEach((text, i) => {
+            about_me_tl.fromTo(
+              text,
+              {
+                opacity: 0,
+              },
+              {
+                opacity: 1,
+                duration: 2,
+                ease: "power2.inOut",
+                scrollTrigger: {
+                  trigger: text,
+                  start: "top 80%",
+                  end: "top 40%",
+                  scrub: true,
+                },
+                onComplete: () => {
+                  gsap.to(text, {
+                    opacity: 0,
+                    duration: 3,
+                    ease: "power2.in",
+                    scrollTrigger: {
+                      trigger: text,
+                      start: "bottom 75%",
+                      end: "bottom 25%",
+                      scrub: true,
+                    },
+                  });
+                },
+              }, ">"
+            );
+          });
+
+          ScrollTrigger.create({
+              trigger: ".abme_text_container",
+              pin: true,
+            })
+
+          about_me_tl.to(
+            "#piano_vertical_3d",
+            {
+              x:"-50%",
+              ease: "circ.inOut",
+              scrollTrigger: {
+                trigger: "#about_me_section",
+                start: "top bottom",
+                endTrigger: "#abme_text_container",
+                end: "top center",
+                scrub: true,
+              },
+            })
+            .to(
+            "#piano_vertical_3d",
+            {
+              x:"122%",
+              ease: "circ.inOut",
+              scrollTrigger: {
+                trigger: "#abme_text_container",
+                start: "20% center",
+                end: "25% top",
+                scrub: true,
+              },
+            })
+            .to(
+            "#piano_vertical_3d",
+            {
+              x:"-50%",
+              ease: "circ.inOut",
+              scrollTrigger: {
+                trigger: "#abme_text_container",
+                start: "60% center",
+                end: "65% top",
+                scrub: true,
+              },
+            })
+            .to(
+            "#piano_vertical_3d",
+            {
+              x:"35%",
+              ease: "circ.inOut",
+              scrollTrigger: {
+                trigger: "#abme_text_container",
+                start: "100% center",
+                end: "105% top",
+                scrub: true,
+              },              
+            })
+            .to("#svg-wrapper", {
+              scale: 100,
+              ease: "circ.inOut",
+              scrollTrigger: {
+                trigger: "#abme_text_container",
+                start: "112% center",
+                end: "125% top",
+                scrub: true,
+              },
+            })
+            .to("#svg-wrapper", {
+              opacity: 0,
+              ease: "circ.inOut",
+              scrollTrigger: {
+                trigger: ".repertory",
+                start: "center 90%",
+                end: "bottom 80%",
+                markers: true,
+                scrub: true,
+              }
+            });  
+          master_tl.add(about_me_tl, ">-1");
+          
         });
       }
     },
@@ -189,7 +315,7 @@ import Footer from "../components/Footer.astro";
 
   #main-container {
     position: relative;
-    height: 100vh;
+    height: 100dvh;
     width: 100vw;
     display: flex;
     justify-content: start;
@@ -209,9 +335,13 @@ import Footer from "../components/Footer.astro";
     margin-top: 20rem;
   }
 
+  #about_me_section {
+    overflow: visible;
+  }
+
   #footer-mask {
     width: 100%;
-    min-height: 20vh;
+    min-height: 20dvh;
     background-color: transparent;
   }
 </style>
