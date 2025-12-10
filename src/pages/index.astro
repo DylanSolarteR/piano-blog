@@ -197,9 +197,12 @@ import Footer from "../components/Footer.astro";
                 end: "top center",
                 scrub: true,
               },
-            })
-            .to(
+            });
+          about_me_tl.fromTo(
             "#piano_vertical_3d",
+            {
+              x:"-50%"
+            },
             {
               x:"450%",
               ease: "circ.inOut",
@@ -209,9 +212,12 @@ import Footer from "../components/Footer.astro";
                 end: "25% top",
                 scrub: true,
               },
-            })
-            .to(
+            });
+          about_me_tl.fromTo(
             "#piano_vertical_3d",
+            {
+              x:"450%",
+            },
             {
               x:"-50%",
               ease: "circ.inOut",
@@ -221,9 +227,12 @@ import Footer from "../components/Footer.astro";
                 end: "65% top",
                 scrub: true,
               },
-            })
-            .to(
-            "#piano_vertical_3d",
+            });
+          about_me_tl.fromTo(
+            "#piano_vertical_3d", 
+            {
+              x:"-50%",
+            },
             {
               x:"200%",
               ease: "circ.inOut",
@@ -233,8 +242,9 @@ import Footer from "../components/Footer.astro";
                 end: "105% top",
                 scrub: true,
               },              
-            })
-            .to("#svg-wrapper", {
+            });
+          about_me_tl.to("#svg-wrapper",
+          {
               scale: 100,
               ease: "circ.inOut",
               scrollTrigger: {
@@ -243,8 +253,8 @@ import Footer from "../components/Footer.astro";
                 end: "125% top",
                 scrub: true,
               },
-            })
-            .to("#svg-wrapper", {
+            });
+          about_me_tl.to("#svg-wrapper", {
               opacity: 0,
               zIndex: -1,
               ease: "circ.inOut",
@@ -254,7 +264,8 @@ import Footer from "../components/Footer.astro";
                 end: "bottom 80%",
                 scrub: true,
               }
-            }).to(
+            })
+            .to(
               "#repertory_section, #body",
               {
                 backgroundColor: "#161616",
@@ -329,8 +340,6 @@ import Footer from "../components/Footer.astro";
               start: "83% bottom",
               end: "90% center",
               scrub: true,
-              markers: true,
-
             },
           });
 
@@ -396,7 +405,7 @@ import Footer from "../components/Footer.astro";
   #main-container {
     position: relative;
     height: 100dvh;
-    width: 100vw;
+    width: 100dvw;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -406,18 +415,14 @@ import Footer from "../components/Footer.astro";
     color: #fff;
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
+    overflow-x: clip;
   }
 
   section {
     width: 100%;
     height: fit-content;
-    max-width: 100%;
+    max-width: 100dvw;
   }
-
-  #about_me_section {
-    overflow: visible;
-  }
-
   #next_songs_section {
     background-color: #161616;
   }
