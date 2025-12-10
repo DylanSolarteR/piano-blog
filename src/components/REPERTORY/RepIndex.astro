@@ -5,38 +5,53 @@ import PianoWithHands from "../../assets/svg/Piano_with_hands.svg";
 ---
 
 <div class="repertory">
-  <h2 class="text_right">Please, listen to the pieces i’ve learned.</h2>
-  <a class="hipervinculo_repertorio a-link"
-    ><span>Repertory</span><ArrowSVG
-      width={50}
-      height={50}
-      class="arrow_right"
-    />
-  </a>
-  <PianoWithHands id="piano_with_hands" preserveAspectRatio="none" />
+  <div id="repertory_text">
+    <h2 class="text_right">Please, listen to the pieces i’ve learned.</h2>
+    <a class="hipervinculo_repertorio a-link"
+      ><span>Repertory</span><ArrowSVG
+        width={50}
+        height={50}
+        class="arrow_right"
+      />
+    </a>
+  </div>
+  <div id="rep_svg_container">
+    <!-- <PianoWithHands id="piano_with_hands" preserveAspectRatio="none" /> -->
+  </div>
 </div>
 
 <style>
   .repertory {
     position: relative;
-    max-width: 100vw;
+    max-width: 100dvw;
     width: 100%;
     min-height: 100dvh;
+    margin: 40rem 0;
+  }
+
+  #repertory_text {
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: end;
     gap: 4rem;
     padding: 28rem 0rem;
-    margin-top: 20rem;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
-  #piano_with_hands {
-    width: 110%;
+  #rep_svg_container {
+    width: 100%;
     position: absolute;
     inset: 0;
     z-index: 0;
-    translate: -10% 0%;
+  }
+
+  #piano_with_hands {
+    width: 100%;
+    translate: -20% 0%;
+    scale: 0.5;
   }
 
   .text_right {
@@ -48,6 +63,7 @@ import PianoWithHands from "../../assets/svg/Piano_with_hands.svg";
     text-align: end;
     text-wrap: balance;
     align-self: end;
+    padding-right: clamp(2rem, 5vw, 5rem);
   }
 
   .hipervinculo_repertorio {
@@ -59,6 +75,7 @@ import PianoWithHands from "../../assets/svg/Piano_with_hands.svg";
     align-items: center;
     z-index: 1;
     gap: 1rem;
+    padding-right: clamp(2rem, 5vw, 5rem);
   }
 
   .hipervinculo_repertorio > .arrow_right {

@@ -14,10 +14,10 @@ import Footer from "../components/Footer.astro";
     <section id="about_me_section">
       <AboutMe />
     </section>
-    <section>
+    <section id="repertory_section">
       <RepIndex />
     </section>
-    <section>
+    <section id="next_songs_section">
       <Nextsongs />
     </section>
     <Footer />
@@ -42,6 +42,7 @@ import Footer from "../components/Footer.astro";
           const master_tl = gsap.timeline({paused: true});
           const hero_tl = gsap.timeline();
           const about_me_tl = gsap.timeline();
+          const rep_tl = gsap.timeline();
 
           window.addEventListener("intro-video-ended", () => {
             master_tl.play();
@@ -143,7 +144,7 @@ import Footer from "../components/Footer.astro";
           });
           master_tl.add(hero_tl);
 
-          //About Me Animations
+          // About Me Animations
           let about_me_text: HTMLElement[] = gsap.utils.toArray("#abme_text_container .text_right_about_me");
 
           about_me_text.forEach((text, i) => {
@@ -200,7 +201,7 @@ import Footer from "../components/Footer.astro";
             .to(
             "#piano_vertical_3d",
             {
-              x:"122%",
+              x:"450%",
               ease: "circ.inOut",
               scrollTrigger: {
                 trigger: "#abme_text_container",
@@ -224,7 +225,7 @@ import Footer from "../components/Footer.astro";
             .to(
             "#piano_vertical_3d",
             {
-              x:"35%",
+              x:"200%",
               ease: "circ.inOut",
               scrollTrigger: {
                 trigger: "#abme_text_container",
@@ -238,25 +239,42 @@ import Footer from "../components/Footer.astro";
               ease: "circ.inOut",
               scrollTrigger: {
                 trigger: "#abme_text_container",
-                start: "112% center",
+                start: "120% center",
                 end: "125% top",
                 scrub: true,
               },
             })
             .to("#svg-wrapper", {
               opacity: 0,
+              zIndex: -1,
               ease: "circ.inOut",
               scrollTrigger: {
                 trigger: ".repertory",
                 start: "center 90%",
                 end: "bottom 80%",
-                markers: true,
                 scrub: true,
               }
-            });  
+            }).to(
+              "#repertory_section, #body",
+              {
+                backgroundColor: "#161616",
+                ease: "none",
+                scrollTrigger: {
+                  trigger: "#repertory_section",
+                  start: "top center",
+                  end: "65% bottom",
+                  scrub: true,
+                },
+              }
+            );
           master_tl.add(about_me_tl, ">-1");
           
+          // Repository Animations
+          
+
         });
+          
+
       }
     },
     { once: false }
@@ -332,11 +350,14 @@ import Footer from "../components/Footer.astro";
     width: 100%;
     height: fit-content;
     max-width: 100%;
-    margin-top: 20rem;
   }
 
   #about_me_section {
     overflow: visible;
+  }
+
+  #next_songs_section {
+    background-color: #161616;
   }
 
   #footer-mask {
