@@ -16,7 +16,7 @@ import PianoWithHands from "../../assets/svg/Piano_with_hands.svg";
     </a>
   </div>
   <div id="rep_svg_container">
-    <!-- <PianoWithHands id="piano_with_hands" preserveAspectRatio="none" /> -->
+    <PianoWithHands id="piano_with_hands" preserveAspectRatio="none" />
   </div>
 </div>
 
@@ -26,6 +26,7 @@ import PianoWithHands from "../../assets/svg/Piano_with_hands.svg";
     max-width: 100dvw;
     width: 100%;
     min-height: 100dvh;
+    height: fit-content;
     margin: 40rem 0;
   }
 
@@ -39,6 +40,7 @@ import PianoWithHands from "../../assets/svg/Piano_with_hands.svg";
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 1;
   }
 
   #rep_svg_container {
@@ -75,7 +77,7 @@ import PianoWithHands from "../../assets/svg/Piano_with_hands.svg";
     align-items: center;
     z-index: 1;
     gap: 1rem;
-    padding-right: clamp(2rem, 5vw, 5rem);
+    margin-right: clamp(2rem, 5vw, 5rem);
   }
 
   .hipervinculo_repertorio > .arrow_right {

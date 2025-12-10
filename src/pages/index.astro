@@ -17,9 +17,9 @@ import Footer from "../components/Footer.astro";
     <section id="repertory_section">
       <RepIndex />
     </section>
-    <section id="next_songs_section">
+    <!-- <section id="next_songs_section">
       <Nextsongs />
-    </section>
+    </section> -->
     <Footer />
   </main>
 </Layout>
@@ -270,7 +270,69 @@ import Footer from "../components/Footer.astro";
           master_tl.add(about_me_tl, ">-1");
           
           // Repository Animations
+
+          rep_tl.fromTo("#repertory_text",
+          {
+            x: 1000,
+            opacity: 0,
+          }, 
+          {
+            x: 0,
+            opacity: 1,
+            ease: "circ.inOut",
+            scrollTrigger: {
+              trigger: "#repertory_text",
+              start: "10% 15%",
+              end: "20% top",
+              scrub: true,
+            },
+          })
+
           
+
+          rep_tl.fromTo("#piano_with_hands",{
+            scale: 0.1,
+            translateX: "-80%",
+            opacity: 0,
+          }, {
+            scale: 0.6,
+            translateX: "-15%",
+            translateY: "-5%",
+            opacity: 1,
+            ease: "circ.inOut",
+            scrollTrigger: {
+              trigger: "#repertory_text",
+              start: "10% 15%",
+              end: "20% top",
+              scrub: true,
+            },
+          });
+
+          rep_tl.to("#repertory_text",
+          {
+            scrollTrigger: {
+              trigger: ".text_right",
+              start: "top 10%",
+              end: "bottom+=1000 85%",
+              scrub: true,
+              pin: "#repertory_text, .repertory",
+              pinSpacing: true,
+            },
+          })
+
+          rep_tl.to("#piano_with_hands, #repertory_text",
+          {
+            opacity: 0,
+            ease: "circ.inOut",
+            scrollTrigger: {
+              trigger: "#repertory_section",
+              start: "83% bottom",
+              end: "90% center",
+              scrub: true,
+              markers: true,
+
+            },
+          });
 
         });
           
