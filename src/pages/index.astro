@@ -1,10 +1,10 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import HERO from "../components/HERO/HERO.astro";
-import AboutMe from "../components/ABOUTME/Aboutme.astro";
-import RepIndex from "../components/REPERTORY/RepIndex.astro";
-import Nextsongs from "../components/NEXTSONGS/Nextsongs.astro";
-import Footer from "../components/Footer.astro";
+import Layout from "@/layouts/Layout.astro";
+import HERO from "@/components/HERO/HERO.astro";
+import AboutMe from "@/components/ABOUTME/Aboutme.astro";
+import RepIndex from "@/components/REPERTORY/RepIndex.astro";
+import Nextsongs from "@/components/NEXTSONGS/Nextsongs.astro";
+import Footer from "@/components/Footer.astro";
 ---
 
 <Layout>
@@ -17,10 +17,10 @@ import Footer from "../components/Footer.astro";
     <section id="repertory_section">
       <RepIndex />
     </section>
-    <!-- <section id="next_songs_section">
+    <section id="next_songs_section">
       <Nextsongs />
-    </section> -->
-    <Footer />
+    </section>
+    <!-- <Footer /> -->
   </main>
 </Layout>
 
@@ -43,6 +43,7 @@ import Footer from "../components/Footer.astro";
           const hero_tl = gsap.timeline();
           const about_me_tl = gsap.timeline();
           const rep_tl = gsap.timeline();
+          const next_songs_tl = gsap.timeline();
 
           window.addEventListener("intro-video-ended", () => {
             master_tl.play();
@@ -284,7 +285,7 @@ import Footer from "../components/Footer.astro";
 
           rep_tl.fromTo("#repertory_text",
           {
-            x: 1000,
+            x: 1300,
             opacity: 0,
           }, 
           {
@@ -331,7 +332,10 @@ import Footer from "../components/Footer.astro";
             },
           })
 
-          rep_tl.to("#piano_with_hands, #repertory_text",
+          rep_tl.fromTo("#piano_with_hands, #repertory_text",
+          {
+            opacity: 1,
+          },
           {
             opacity: 0,
             ease: "circ.inOut",
@@ -343,9 +347,71 @@ import Footer from "../components/Footer.astro";
             },
           });
 
-        });
-          
+          master_tl.add(rep_tl, ">-1");
 
+          // Animations Next Songs
+
+          // ScrollTrigger.create({
+          //     trigger: "#next_songs_section",
+          //     start: "top top",
+          //     end: "+=300%",
+          //     pin: true,
+          //     pinSpacing: true,
+          //     scrub: true,
+          //   })
+
+          // next_songs_tl.fromTo("#ns-intro-text-container",{
+          //   opacity: 0,
+          // }, {
+          //   opacity: 1,
+          //   ease: "circ.inOut",
+          //   scrollTrigger: {
+          //     trigger: "#next_songs_section",
+          //     start: "10% center",
+          //     end: "25% top",
+          //     scrub: true,
+          //   },
+          // })
+
+          // next_songs_tl.to(".bg-rect:nth-of-type(2n)", {
+          //   x: "0%",
+          //   ease: "circ.inOut",
+          //   scrollTrigger: {
+          //     trigger: "#next_songs_section",
+          //     start: "center center",
+          //     end: "80% top",
+          //     scrub: true,
+          //   },
+          // });
+
+          // next_songs_tl.to(".bg-rect:nth-of-type(2n+1)", {
+          //   x: "0%",
+          //   ease: "circ.inOut",
+          //   scrollTrigger: {
+          //     trigger: "#next_songs_section",
+          //     start: "center center",
+          //     end: "80% top",
+          //     scrub: true,
+          //   },
+          // });
+
+          // next_songs_tl.fromTo('#songs_player', {
+          //   opacity: 0,
+          // }, 
+          // {
+          //   opacity: 1,
+          //   scrollTrigger: {
+          //     trigger: "#next_songs_section",
+          //     start: "50% center",
+          //     end: "50% top",
+          //     scrub: true,
+          //     markers: true,
+          //   }
+          // })
+
+
+        });
+        
       }
     },
     { once: false }
@@ -425,6 +491,9 @@ import Footer from "../components/Footer.astro";
   }
   #next_songs_section {
     background-color: #161616;
+    width: 100%;
+    min-height: 100dvh;
+    height: 100%;
   }
 
   #footer-mask {
