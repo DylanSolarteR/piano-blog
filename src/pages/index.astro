@@ -148,6 +148,8 @@ import Footer from "@/components/Footer.astro";
           // About Me Animations
           let about_me_text: HTMLElement[] = gsap.utils.toArray("#abme_text_container .text_right_about_me");
 
+
+
           about_me_text.forEach((text, i) => {
             about_me_tl.fromTo(
               text,
@@ -185,6 +187,18 @@ import Footer from "@/components/Footer.astro";
               trigger: ".abme_text_container",
               pin: true,
             })
+          about_me_tl.fromTo("#piano_vertical_3d", {
+            visibility: "hidden",
+          }, {
+            visibility: "visible",
+            scrollTrigger: {
+              trigger: "#about_me_section",
+              start: "top bottom",
+              end: "top center",
+              scrub: true,
+              markers: true,
+            },
+          });
 
           about_me_tl.to(
             "#piano_vertical_3d",
