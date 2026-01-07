@@ -55,7 +55,6 @@ import { ClientRouter } from "astro:transitions";
         video.addEventListener("ended", () => {
           document.body.style.overflow = "auto";
           videoContainer.style.display = "none";
-          console.log("Intro video ended");
           window.dispatchEvent(new Event("intro-video-ended"));
         });
 

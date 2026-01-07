@@ -4,12 +4,15 @@ import Play from "@/assets/svg/Play_vector.svg?react";
 import Pause from "@/assets/svg/Pause_vector.svg?react";
 import Loader from "@/assets/svg/Loader.svg?react";
 import "./SongCard.css";
-import { set } from "astro:schema";
 
-type Props = Pick<Song, "title" | "imagePreviewUrl" | "songFileName">;
+type Props = Pick<
+  Song,
+  "title" | "author" | "imagePreviewUrl" | "songFileName"
+>;
 
 export default function SongCardClient({
   title,
+  author,
   imagePreviewUrl,
   songFileName,
 }: Props) {
@@ -17,6 +20,7 @@ export default function SongCardClient({
 
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
   async function toggle() {
     const a = audioRef.current;
@@ -25,13 +29,11 @@ export default function SongCardClient({
     if (a.paused) {
       try {
         setLoading(true);
-        await a.play(); // importante: play() puede devolver Promise y fallar
+        await a.play();
         setPlaying(true);
       } catch (err) {
         console.error("audio play() failed:", err);
         setPlaying(false);
-      } finally {
-        // si ya está reproduciendo, loading se apagará en onPlaying/onCanPlay
       }
     } else {
       a.pause();
@@ -51,38 +53,48 @@ export default function SongCardClient({
       audioRef.current.load();
       // auto-play on song change but not in first render
       // (user has to click to play first time)
-      if (audioRef.current.paused === true) {
+      if (hasMounted) {
         toggle();
       }
     }
   }, [songFileName]);
 
-  return (
-    <div id="SongCard" onClick={toggle}>
-      <img className="card-image" src={imagePreviewUrl.src} alt={title} />
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
-      <audio
-        ref={audioRef}
-        src={`/src/assets/songs/nextsongs/${songFileName}`}
-        preload="metadata"
-        onLoadStart={() => setLoading(true)}
-        onWaiting={() => setLoading(true)}
-        onCanPlay={() => setLoading(false)}
-        onPlaying={() => setLoading(false)}
-        onPause={() => setPlaying(false)}
-        onEnded={() => {
-          setPlaying(false);
-          setLoading(false);
-        }}
-        onError={() => {
-          setLoading(false);
-          setPlaying(false);
-          console.error("audio error loading:", songFileName);
-        }}
-      />
-      <div id="play-pause-icon">
-        {loading ? <Loader /> : playing ? <Pause /> : <Play />}
+  return (
+    <>
+      <div id="SongCard" onClick={toggle}>
+        <img className="card-image" src={imagePreviewUrl.src} alt={title} />
+
+        <audio
+          ref={audioRef}
+          src={`/src/assets/songs/nextsongs/${songFileName}`}
+          preload="metadata"
+          onLoadStart={() => setLoading(true)}
+          onWaiting={() => setLoading(true)}
+          onCanPlay={() => setLoading(false)}
+          onPlaying={() => setLoading(false)}
+          onPause={() => setPlaying(false)}
+          onEnded={() => {
+            setPlaying(false);
+            setLoading(false);
+          }}
+          onError={() => {
+            setLoading(false);
+            setPlaying(false);
+            console.error("audio error loading:", songFileName);
+          }}
+        />
+        <div id="play-pause-icon">
+          {loading ? <Loader /> : playing ? <Pause /> : <Play />}
+        </div>
       </div>
-    </div>
+      <div id="song-info">
+        <h2>{title}</h2>
+        <h3>{author}</h3>
+      </div>
+    </>
   );
 }

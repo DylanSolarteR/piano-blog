@@ -18,14 +18,10 @@ export default function NextSongsPlayerClient({
       <aside id="playing-song">
         <SongCardClient
           title={current.title}
+          author={current.author}
           imagePreviewUrl={current.imagePreviewUrl}
           songFileName={current.songFileName}
         />
-
-        <div id="song-info">
-          <h2>{current.title}</h2>
-          <h3>{current.author}</h3>
-        </div>
       </aside>
 
       <section id="other-songs-container">
