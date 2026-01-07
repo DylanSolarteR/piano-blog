@@ -23,21 +23,23 @@ export default function NextSongsPlayerClient({
           songFileName={current.songFileName}
         />
       </aside>
-
-      <section id="other-songs-container">
-        <div id="other-songs">
-          {nextSongs
-            .filter((song) => song.id !== currentSongId)
-            .map((song) => (
-              <SongCardPreview
-                key={song.id}
-                title={song.title}
-                author={song.author}
-                imagePreviewUrl={song.imagePreviewUrl}
-                changeSong={() => setCurrentSongId(song.id)}
-              />
-            ))}
+      <section id="other-songs-container-wrapper">
+        <div id="other-songs-container">
+          <div id="other-songs">
+            {nextSongs
+              .filter((song) => song.id !== currentSongId)
+              .map((song) => (
+                <SongCardPreview
+                  key={song.id}
+                  title={song.title}
+                  author={song.author}
+                  imagePreviewUrl={song.imagePreviewUrl}
+                  changeSong={() => setCurrentSongId(song.id)}
+                />
+              ))}
+          </div>
         </div>
+        <div id="fade-bottom"></div>
       </section>
     </div>
   );
