@@ -55,9 +55,20 @@ import { ClientRouter } from "astro:transitions";
         video.addEventListener("ended", () => {
           document.body.style.overflow = "auto";
           videoContainer.style.display = "none";
-
+          console.log("Intro video ended");
           window.dispatchEvent(new Event("intro-video-ended"));
         });
+
+        //if dom content has loaded but video hasn't downloaded yet, skip intro after 5 seconds
+        setTimeout(() => {
+          if (!video.complete || video.readyState < 4) {
+            video.pause();
+            document.body.style.overflow = "auto";
+            videoContainer.style.display = "none";
+            console.log("Intro video skipped due to timeout");
+            window.dispatchEvent(new Event("intro-video-ended"));
+          }
+        }, 5000);
       });
     </script>
     <script src="../scripts/gsap_init.tsx"></script>

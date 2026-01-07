@@ -1,6 +1,7 @@
 import type { Song } from "./types";
 import "./SongCardPreview.css";
-type SongCardPreviewProps = Omit<Song, "id" | "url"> & {
+
+type SongCardPreviewProps = Omit<Song, "id" | "songFileName" | "url"> & {
   changeSong: () => void;
 };
 
@@ -11,10 +12,10 @@ export default function SongCardPreview({
   changeSong,
 }: SongCardPreviewProps) {
   return (
-    <button className="song-preview-button">
-      <div className="SongCardPreview" onClick={() => changeSong()}>
+    <button type="button" className="song-preview-button" onClick={changeSong}>
+      <div className="SongCardPreview">
         <div className="SongCard">
-          <img className={"card-image"} src={imagePreviewUrl.src} alt={title} />
+          <img className="card-image" src={imagePreviewUrl.src} alt={title} />
         </div>
         <div className="song-info">
           <h3 className="song-title">{title}</h3>

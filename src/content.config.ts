@@ -12,7 +12,7 @@ const nextSongsCollection = defineCollection({
         author: z.string(),
         url: z.string().url(),
         imagePreviewUrl: image(),
-        songFileUrl: z.string().min(1, { message: "File path cannot be empty." })
+        songFileName: z.string().min(1, { message: "File path cannot be empty." })
             .regex(
                 new RegExp(`.*(${ACCEPTED_SONG_EXTENSIONS.join('|')})$`, 'i'),
                 { message: "Invalid song file path or extension." }
