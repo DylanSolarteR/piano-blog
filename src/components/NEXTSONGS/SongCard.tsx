@@ -88,7 +88,7 @@ export default function SongCardClient({
           }}
         />
         <div id="play-pause-icon">
-          {loading ? <Loader /> : playing ? <Pause /> : <Play />}
+          {loading ? <Loader id="loader" /> : playing ? <Pause /> : <Play />}
         </div>
       </div>
       <div id="song-info">
