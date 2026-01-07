@@ -4,4 +4,5 @@ export interface Song {
     author: string;
     url: string;
     imagePreviewUrl: ImageMetadata;
+    songFileUrl: string;
 }
