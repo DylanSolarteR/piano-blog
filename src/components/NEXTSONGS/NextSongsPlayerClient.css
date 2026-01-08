@@ -23,6 +23,7 @@
 #other-songs-container-wrapper {
   width: 50%;
   height: 90%;
+  padding-bottom: 0.1rem;
   position: relative;
 }
 
