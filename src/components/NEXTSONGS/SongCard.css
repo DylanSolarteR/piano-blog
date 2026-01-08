@@ -24,15 +24,11 @@
 
 #play-pause-icon {
   position: absolute;
-  margin: 1rem;
-  top: 0;
-  left: 0;
-  width: clamp(32px, 4vw + 0.1rem, 64px);
-  height: clamp(32px, 4vw + 0.1rem, 64px);
+  top: 1.5rem;
+  left: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  mix-blend-mode: difference;
   pointer-events: none;
 }
 
@@ -72,4 +68,104 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 80%;
+}
+
+#right-icons {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: end;
+  pointer-events: auto;
+}
+
+.iconBtn {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.volumeWrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.volumePopover {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: -6px;
+  width: 46px;
+  height: 140px;
+  padding: 10px;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: 180ms ease;
+}
+
+.volumeWrap.open .volumePopover {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.volumeSlider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.volumeTrack {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.volumeFill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+#progress-track {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  touch-action: none;
+}
+
+#progress-track .progressFill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform: scaleX(var(--progress, 0));
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.iconSongCard {
+  color: white;
+  filter:
+    drop-shadow(0 2px 2px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 6px rgba(0, 0, 0, 0.6));
 }

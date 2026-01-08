@@ -25,6 +25,7 @@ export default function NextSongsPlayerClient({
           author={current.author}
           imagePreviewUrl={current.imagePreviewUrl}
           songFileName={current.songFileName}
+          url={current.url}
         />
       </aside>
       <section id="other-songs-container-wrapper">
