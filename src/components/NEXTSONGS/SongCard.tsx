@@ -4,6 +4,7 @@ import Play from "@/assets/svg/Play_vector.svg?react";
 import Pause from "@/assets/svg/Pause_vector.svg?react";
 import Loader from "@/assets/svg/Loader.svg?react";
 import "./SongCard.css";
+import gsap from "gsap";
 
 type Props = Pick<
   Song,
@@ -21,6 +22,19 @@ export default function SongCardClient({
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+
+  function renderAnimation() {
+    gsap.fromTo(
+      "#SongCardClient",
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power1.inOut",
+      }
+    );
+  }
 
   async function toggle() {
     const a = audioRef.current;
@@ -42,7 +56,7 @@ export default function SongCardClient({
     }
   }
 
-  // cuando cambia la canción, pausa y resetea
+  // when the song changes, reset states and auto-play
   useEffect(() => {
     setPlaying(false);
     setLoading(false);
@@ -55,16 +69,18 @@ export default function SongCardClient({
       // (user has to click to play first time)
       if (hasMounted) {
         toggle();
+        renderAnimation();
       }
     }
   }, [songFileName]);
 
   useEffect(() => {
+    renderAnimation();
     setHasMounted(true);
   }, []);
 
   return (
-    <>
+    <div id="SongCardClient">
       <div id="SongCard" onClick={toggle}>
         <img className="card-image" src={imagePreviewUrl.src} alt={title} />
 
@@ -92,9 +108,9 @@ export default function SongCardClient({
         </div>
       </div>
       <div id="song-info">
-        <h2>{title}</h2>
-        <h3>{author}</h3>
+        <h2 title={title}>{title}</h2>
+        <h3 title={author}>{author}</h3>
       </div>
-    </>
+    </div>
   );
 }
