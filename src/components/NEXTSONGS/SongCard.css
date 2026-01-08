@@ -33,7 +33,8 @@
 }
 
 #loader {
-  scale: 0.7;
+  width: 32px;
+  height: 32px;
 }
 
 @keyframes spin {

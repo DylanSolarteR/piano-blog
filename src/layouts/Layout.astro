@@ -56,6 +56,7 @@ import { ClientRouter } from "astro:transitions";
           document.body.style.overflow = "auto";
           videoContainer.style.display = "none";
           window.dispatchEvent(new Event("intro-video-ended"));
+          return;
         });
 
         //if dom content has loaded but video hasn't downloaded yet, skip intro after 5 seconds
@@ -67,7 +68,7 @@ import { ClientRouter } from "astro:transitions";
             console.log("Intro video skipped due to timeout");
             window.dispatchEvent(new Event("intro-video-ended"));
           }
-        }, 5000);
+        }, 4200);
       });
     </script>
     <script src="../scripts/gsap_init.tsx"></script>
