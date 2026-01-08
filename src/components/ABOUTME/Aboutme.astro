@@ -67,7 +67,7 @@ import PianoVertical3D from "@/assets/svg/PianoVertical3D.svg";
     z-index: 1;
     text-align: end;
     text-wrap: balance;
-    margin-left: 40%;
+    margin-left: 50%;
     padding-right: clamp(2rem, 5vw, 5rem);
   }
 
@@ -75,7 +75,20 @@ import PianoVertical3D from "@/assets/svg/PianoVertical3D.svg";
     margin-left: 0%;
     align-self: start;
     text-align: start;
-    margin-right: 40%;
+    margin-right: 50%;
     padding-left: clamp(2rem, 5vw, 5rem);
+  }
+
+  @media (width<425px) {
+    .text_right_about_me {
+      font-size: clamp(1.75rem, 5vw, 3rem);
+      margin-left: 50%;
+      padding-right: 1rem;
+    }
+
+    .text_right_about_me:nth-of-type(2n) {
+      margin-right: 50%;
+      padding-left: 1rem;
+    }
   }
 </style>
