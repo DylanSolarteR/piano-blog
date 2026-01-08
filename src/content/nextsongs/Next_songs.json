@@ -3,160 +3,72 @@
     "id": 0,
     "title": "Watcher",
     "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
+    "url": "https://youtu.be/JNS83lXPvpU?si=YInmrZIOT1flJ_Vn",
     "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
     "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
   },
   {
     "id": 1,
-    "title": "Watcher2",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Aethoro - Sleepy Garden.mp3"
+    "title": "Underwater Reflection",
+    "author": "美波 (Minami)",
+    "url": "https://youtu.be/gYKhiurc7Pk?si=-0EYRm0IeHd7TWig",
+    "imagePreviewUrl": "../../assets/images/nextsongs/underwater-reflection-image.jpg",
+    "songFileName": "Minami - Underwater Reflection Piano cover.mp3"
   },
   {
     "id": 2,
-    "title": "Watcher3",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
+    "title": "Starry Night",
+    "author": "Jordan Critz",
+    "url": "https://youtu.be/r2bFxxB6Zws?si=nQRM8TXflYA9O9l-",
+    "imagePreviewUrl": "../../assets/images/nextsongs/Starry-Night-Image.jpg",
+    "songFileName": "Jordan Critz - Starry Night Piano.mp3"
   },
   {
     "id": 3,
-    "title": "Watcher4",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
+    "title": "Choral Chambers",
+    "author": "Christpher Larkin",
+    "url": "https://youtu.be/gTdr_qoRwMc?si=qqHUD8A0b55XRABf",
+    "imagePreviewUrl": "../../assets/images/nextsongs/choral-chambers-image.jpg",
+    "songFileName": "Christpher Larkin - Choral Chambers Piano Cover.mp3"
   },
   {
     "id": 4,
-    "title": "Watcher5",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
+    "title": "Greenpath",
+    "author": "Christopher Larkin",
+    "url": "https://youtu.be/ALecFekVo8A?si=05nuzd5LfrhVeOkx",
+    "imagePreviewUrl": "../../assets/images/nextsongs/greenpath-image.jpg",
+    "songFileName": "Christopher Larkin - Greenpath Piano Cover.mp3"
   },
   {
     "id": 5,
-    "title": "Watcher6",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
+    "title": "The Primal Scene of Japan the Girl Saw",
+    "author": "ZUN",
+    "url": "https://youtu.be/Pztdcqs55TM?si=5qmUS_fWCsppPwX-",
+    "imagePreviewUrl": "../../assets/images/nextsongs/th10-sanae-image.jpg",
+    "songFileName": "Touhou 10 MoF The Primal Scene of Japan the Girl Saw Piano Arrangement.mp3"
   },
   {
     "id": 6,
-    "title": "Watcher7",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
+    "title": "Frozen Capital of Eternity",
+    "author": "ZUN",
+    "url": "https://youtu.be/9Dx77toAssI?si=rQ_Hq03WdWylkVo8",
+    "imagePreviewUrl": "../../assets/images/nextsongs/th15-sagume-image.jpg",
+    "songFileName": "Touhou 15 Frozen Capital of Eternity Piano Arrangement.mp3"
   },
   {
     "id": 7,
-    "title": "Watcher8",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
+    "title": "The Shining Needle Castle Sinking in the Air",
+    "author": "ZUN",
+    "url": "https://youtu.be/uJPzBhk91ps?si=YcwLsbJp5Wz2nuQV",
+    "imagePreviewUrl": "../../assets/images/nextsongs/th14-kijin-seija-image.jpg",
+    "songFileName": "Touhou 14 The Shining Needle Castle Sinking in the Air Piano.mp3"
   },
   {
     "id": 8,
-    "title": "Watcher9",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 9,
-    "title": "Watcher10",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 10,
-    "title": "Watcher11",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 11,
-    "title": "Watcher12",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 12,
-    "title": "Watcher13",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 13,
-    "title": "Watcher14",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 14,
-    "title": "Watcher15",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 15,
-    "title": "Watcher16",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 16,
-    "title": "Watcher17",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 17,
-    "title": "Watcher18",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 18,
-    "title": "Watcher19",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
-  },
-  {
-    "id": 19,
-    "title": "Watcher20",
-    "author": "Aaron Cherof",
-    "url": "https://www.youtube.com/watch?v=JNS83lXPvpU&list=PLXUStutCMhbtyGn5zf4hUZx05044lAdNU&index=50",
-    "imagePreviewUrl": "../../assets/images/nextsongs/watcher-image.jpg",
-    "songFileName": "Watcher_Aaron_Cherof_Piano_Cover.mp3"
+    "title": "Emotional Skyscraper ~ Cosmic Mind",
+    "author": "ZUN",
+    "url": "https://youtu.be/o8--KHQ11xg?si=1NCZav5pQ5FY6qSB",
+    "imagePreviewUrl": "../../assets/images/nextsongs/th12-Hijiri-image.jpg",
+    "songFileName": "Touhou 12 Emotional Skyscraper ~ Cosmic Mind Piano Arrangement.mp3"
   }
 ]
