@@ -24,7 +24,7 @@ export default function NextSongsPlayerClient({
         />
       </aside>
       <section id="other-songs-container-wrapper">
-        <div id="other-songs-container">
+        <div id="other-songs-container" data-lenis-prevent>
           <div id="other-songs">
             {nextSongs
               .filter((song) => song.id !== currentSongId)
