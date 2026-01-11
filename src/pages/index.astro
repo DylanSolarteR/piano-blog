@@ -17,8 +17,10 @@ import Footer from "@/components/Footer.astro";
     <section id="repertory_section">
       <RepIndex />
     </section>
-    <section id="next_songs_section">
-      <Nextsongs />
+    <section>
+      <div id="next_songs_section">
+        <Nextsongs />
+      </div>
     </section>
     <Footer />
   </main>
@@ -43,7 +45,6 @@ import Footer from "@/components/Footer.astro";
           const hero_tl = gsap.timeline();
           const about_me_tl = gsap.timeline();
           const rep_tl = gsap.timeline();
-          const next_songs_tl = gsap.timeline();
 
           window.addEventListener("intro-video-ended", () => {
             master_tl.play();
@@ -364,66 +365,52 @@ import Footer from "@/components/Footer.astro";
 
           // Animations Next Songs
 
-          // ScrollTrigger.create({
-          //     trigger: "#next_songs_section",
-          //     start: "top top",
-          //     end: "+=300%",
-          //     pin: true,
-          //     pinSpacing: true,
-          //     scrub: true,
-          //   })
+          const next_songs_tl = gsap.timeline(
+            {
+              scrollTrigger: {
+                trigger: "#next_songs_container",
+                start: "top top",
+                end: "+=300%",
+                pin: true,
+                scrub: 1,
+              },
+            }
+          );
 
-          // next_songs_tl.fromTo("#ns-intro-text-container",{
-          //   opacity: 0,
-          // }, {
-          //   opacity: 1,
-          //   ease: "circ.inOut",
-          //   scrollTrigger: {
-          //     trigger: "#next_songs_section",
-          //     start: "10% center",
-          //     end: "25% top",
-          //     scrub: true,
-          //   },
-          // })
-
-          // next_songs_tl.to(".bg-rect:nth-of-type(2n)", {
-          //   x: "0%",
-          //   ease: "circ.inOut",
-          //   scrollTrigger: {
-          //     trigger: "#next_songs_section",
-          //     start: "center center",
-          //     end: "80% top",
-          //     scrub: true,
-          //   },
-          // });
-
-          // next_songs_tl.to(".bg-rect:nth-of-type(2n+1)", {
-          //   x: "0%",
-          //   ease: "circ.inOut",
-          //   scrollTrigger: {
-          //     trigger: "#next_songs_section",
-          //     start: "center center",
-          //     end: "80% top",
-          //     scrub: true,
-          //   },
-          // });
-
-          // next_songs_tl.fromTo('#songs_player', {
-          //   opacity: 0,
-          // }, 
-          // {
-          //   opacity: 1,
-          //   scrollTrigger: {
-          //     trigger: "#next_songs_section",
-          //     start: "50% center",
-          //     end: "50% top",
-          //     scrub: true,
-          //     markers: true,
-          //   }
-          // })
-
-
+          next_songs_tl
+          .fromTo("#ns-intro-text",{
+            opacity: 0,
+          }, {
+            opacity: 1,
+            duration: 0.1,
+            ease: "power2.inOut",
+          })
+          .to(".bg-rect:nth-of-type(2n)", {
+            x: "0%",
+            ease: "circ.inOut",
+          }, ">1")
+          .to(".bg-rect:nth-of-type(2n+1)", {
+            x: "0%",
+            ease: "circ.inOut",
+          }, "<")
+          .fromTo('.bg-rect',{
+            opacity: 1,
+          }, 
+          {
+            opacity: 0,
+            ease: "circ.inOut",
+          }, ">0.2").fromTo("#songs_player",{
+            opacity: 0,
+            pointerEvents: "none",
+          }, {
+            opacity: 1,
+            pointerEvents: "auto",
+            duration: 0.01,
+            ease: "power2.inOut",
+          }, "<-0.2");
+          master_tl.add(next_songs_tl, ">-1");
         });
+
         
       }
     },
@@ -505,15 +492,10 @@ import Footer from "@/components/Footer.astro";
   #next_songs_section {
     background-color: #161616;
     width: 100%;
-    min-height: 200dvh;
-    height: 100%;
+    min-height: 100dvh;
+    height: fit-content;
   }
 
-  #footer-mask {
-    width: 100%;
-    min-height: 20dvh;
-    background-color: transparent;
-  }
 </style>
 
 <style is:global>

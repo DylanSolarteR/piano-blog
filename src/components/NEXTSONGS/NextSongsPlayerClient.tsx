@@ -18,7 +18,10 @@ export default function NextSongsPlayerClient({
   const current = nextSongs[currentSongId];
 
   return (
-    <div id="no-responsive-next-songs-container">
+    <div
+      id="no-responsive-next-songs-container"
+      className="song-player-container"
+    >
       <aside id="playing-song">
         <SongCardClient
           title={current.title}
