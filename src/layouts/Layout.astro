@@ -71,7 +71,7 @@ import { ClientRouter } from "astro:transitions";
         }, 4200);
       });
     </script>
-    <script src="../scripts/gsap_init.tsx"></script>
+    <script src="../scripts/gsap_init.ts"></script>
   </body>
 </html>
 
@@ -157,30 +157,3 @@ import { ClientRouter } from "astro:transitions";
     height: 100dvh;
   }
 </style>
-
-<!-- <script>
-  let ctx: gsap.Context | null = null;
-  let wantToInitialize = false;
-
-  document.addEventListener(
-    "astro:page-load",
-    () => {
-      const currentPath = window.location.pathname;
-      wantToInitialize = currentPath === "/";
-
-      if (wantToInitialize) {
-        ctx = gsap.context(() => {});
-
-        ctx?.add(() => {});
-      }
-    },
-    { once: false }
-  );
-
-  document.addEventListener("astro:after-swap", () => {
-    if (ctx != null) {
-      ctx?.revert();
-      ctx = null;
-    }
-  });
-</script>  -->
