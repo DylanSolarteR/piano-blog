@@ -33,14 +33,14 @@ import PianoVertical3D from "@/assets/svg/PianoVertical3D.svg";
   }
 
   #abme_text_container {
+    position: absolute;
+    inset: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: end;
     z-index: 1;
-    padding: clamp(4rem, 5vw, 6rem) 0;
-    gap: 70rem;
   }
 
   #svg-wrapper {
@@ -69,6 +69,8 @@ import PianoVertical3D from "@/assets/svg/PianoVertical3D.svg";
     text-wrap: balance;
     margin-left: 50%;
     padding-right: clamp(2rem, 5vw, 5rem);
+    position: absolute;
+    top: 25%;
   }
 
   .text_right_about_me:nth-of-type(2n) {

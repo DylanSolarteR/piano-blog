@@ -14,8 +14,10 @@ import Footer from "@/components/Footer.astro";
     <section id="about_me_section">
       <AboutMe />
     </section>
-    <section id="repertory_section">
-      <RepIndex />
+    <section >
+      <div id="repertory_section">
+        <RepIndex />
+      </div>
     </section>
     <section>
       <div id="next_songs_section">
@@ -115,6 +117,14 @@ import Footer from "@/components/Footer.astro";
     height: fit-content;
     max-width: 100dvw;
   }
+
+  #repertory_section {
+    width: 100%;
+    min-height: 100dvh;
+    height: 100dvh;
+    position: relative;
+  }
+
   #next_songs_section {
     background-color: #161616;
     width: 100%;

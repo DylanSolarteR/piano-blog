@@ -9,8 +9,6 @@ export function loadAnimationsIndex() {
         // Animaciones
         const master_tl = gsap.timeline({ paused: true });
         const hero_tl = gsap.timeline();
-        const about_me_tl = gsap.timeline();
-        const rep_tl = gsap.timeline();
 
         window.addEventListener("intro-video-ended", () => {
             master_tl.play();
@@ -113,48 +111,8 @@ export function loadAnimationsIndex() {
         master_tl.add(hero_tl);
 
         // About Me Animations
-        let about_me_text: HTMLElement[] = gsap.utils.toArray("#abme_text_container .text_right_about_me");
 
-
-
-        about_me_text.forEach((text, i) => {
-            about_me_tl.fromTo(
-                text,
-                {
-                    opacity: 0,
-                },
-                {
-                    opacity: 1,
-                    duration: 2,
-                    ease: "power2.inOut",
-                    scrollTrigger: {
-                        trigger: text,
-                        start: "top 80%",
-                        end: "top 40%",
-                        scrub: true,
-                    },
-                    onComplete: () => {
-                        gsap.to(text, {
-                            opacity: 0,
-                            duration: 3,
-                            ease: "power2.in",
-                            scrollTrigger: {
-                                trigger: text,
-                                start: "bottom 75%",
-                                end: "bottom 25%",
-                                scrub: true,
-                            },
-                        });
-                    },
-                }, ">"
-            );
-        });
-
-        ScrollTrigger.create({
-            trigger: ".abme_text_container",
-            pin: true,
-        })
-        about_me_tl.fromTo("#piano_vertical_3d", {
+        master_tl.fromTo("#piano_vertical_3d", {
             visibility: "hidden",
         }, {
             visibility: "visible",
@@ -166,175 +124,187 @@ export function loadAnimationsIndex() {
             },
         });
 
-        about_me_tl.to(
-            "#piano_vertical_3d",
-            {
-                x: "-50%",
-                ease: "circ.inOut",
-                scrollTrigger: {
-                    trigger: "#about_me_section",
-                    start: "top bottom",
-                    endTrigger: "#abme_text_container",
-                    end: "top center",
-                    scrub: true,
-                },
-            });
-        about_me_tl.fromTo(
-            "#piano_vertical_3d",
-            {
-                x: "-50%"
-            },
-            {
-                x: "450%",
-                ease: "circ.inOut",
-                scrollTrigger: {
-                    trigger: "#abme_text_container",
-                    start: "20% center",
-                    end: "25% top",
-                    scrub: true,
-                },
-            });
-        about_me_tl.fromTo(
-            "#piano_vertical_3d",
-            {
-                x: "450%",
-            },
-            {
-                x: "-50%",
-                ease: "circ.inOut",
-                scrollTrigger: {
-                    trigger: "#abme_text_container",
-                    start: "60% center",
-                    end: "65% top",
-                    scrub: true,
-                },
-            });
-        about_me_tl.fromTo(
-            "#piano_vertical_3d",
-            {
-                x: "-50%",
-            },
-            {
-                x: "200%",
-                ease: "circ.inOut",
-                scrollTrigger: {
-                    trigger: "#abme_text_container",
-                    start: "100% center",
-                    end: "105% top",
-                    scrub: true,
-                },
-            });
-        about_me_tl.to("#svg-wrapper",
-            {
-                scale: 100,
-                ease: "circ.inOut",
-                scrollTrigger: {
-                    trigger: "#abme_text_container",
-                    start: "120% center",
-                    end: "125% top",
-                    scrub: true,
-                },
-            });
-        about_me_tl.to("#svg-wrapper", {
-            opacity: 0,
-            zIndex: -1,
-            ease: "circ.inOut",
+        const about_me_tl = gsap.timeline({
             scrollTrigger: {
-                trigger: ".repertory",
-                start: "center 90%",
-                end: "bottom 80%",
-                scrub: true,
-            }
+                trigger: ".about_me",
+                start: "top top",
+                end: "+=1000%",
+                pin: true,
+                scrub: 1,
+            },
         })
+
+        about_me_tl.fromTo(
+            "#piano_vertical_3d", {
+            x: "-300%",
+        },
+            {
+                x: "-50%",
+                ease: "circ.inOut",
+                duration: 1,
+            })
+            .fromTo(
+                "#abme_text_container > h2:nth-child(1)",
+                {
+                    opacity: 0,
+                    y: 100,
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power2.inOut",
+                }, ">"
+            )
+            .to("#abme_text_container > h2:nth-child(1)", {
+                opacity: 0,
+                y: 100,
+                duration: 1,
+                ease: "power2.in",
+            }, ">1")
+            .fromTo(
+                "#piano_vertical_3d",
+                {
+                    x: "-50%"
+                },
+                {
+                    x: "450%",
+                    duration: 2,
+                    ease: "circ.inOut",
+                })
+            .fromTo(
+                "#abme_text_container > h2:nth-child(2)",
+                {
+                    opacity: 0,
+                    y: 100,
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.inOut",
+                }, ">"
+            )
+            .to("#abme_text_container > h2:nth-child(2)", {
+                opacity: 0,
+                y: 100,
+                duration: 1,
+                ease: "power2.in",
+            }, ">1")
+            .fromTo(
+                "#piano_vertical_3d",
+                {
+                    x: "450%",
+                },
+                {
+                    x: "-50%",
+                    ease: "circ.inOut",
+                    duration: 2,
+                })
+            .fromTo(
+                "#abme_text_container > h2:nth-child(3)",
+                {
+                    opacity: 0,
+                    y: 100,
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.inOut",
+                }, ">"
+            )
+            .to("#abme_text_container > h2:nth-child(3)", {
+                opacity: 0,
+                y: 100,
+                duration: 1,
+                ease: "power2.in",
+            }, ">1")
+            .fromTo(
+                "#piano_vertical_3d",
+                {
+                    x: "-50%",
+                },
+                {
+                    x: "200%",
+                    ease: "circ.inOut",
+                    duration: 2,
+                })
+            .to("#svg-wrapper",
+                {
+                    scale: 10,
+                    ease: "circ.inOut",
+                    duration: 1,
+                }, ">")
+            .to("#svg-wrapper", {
+                opacity: 0,
+                zIndex: -1,
+                ease: "circ.inOut",
+                duration: 1,
+            }, "<1")
             .to(
-                "#repertory_section, #body",
+                ".about_me, #body",
                 {
                     backgroundColor: "#161616",
                     ease: "none",
-                    scrollTrigger: {
-                        trigger: "#repertory_section",
-                        start: "top center",
-                        end: "65% bottom",
-                        scrub: true,
-                    },
-                }
-            );
-        master_tl.add(about_me_tl, ">-1");
+                    duration: 0.1,
+                }, "<"
+            ).to("#piano_vertical_3d", {
+                opacity: 0,
+                display: "none",
+                ease: "none",
+                duration: 0.1,
+            }, ">1");
+
+
+        master_tl.add(about_me_tl, ">");
+
+        ////////////////////////////////////////////////////////////////////
 
         // Repository Animations
 
-        rep_tl.fromTo("#repertory_text",
-            {
-                x: 1300,
-                opacity: 0,
-            },
-            {
-                x: 0,
-                opacity: 1,
-                ease: "circ.inOut",
-                scrollTrigger: {
-                    trigger: "#repertory_text",
-                    start: "10% 30%",
-                    end: "center top",
-                    scrub: true,
-                },
-            })
-
-
-
-        rep_tl.fromTo("#piano_with_hands", {
-            scale: 0.1,
-            translateX: "-80%",
-            opacity: 0,
-        }, {
-            scale: 0.6,
-            translateX: "-15%",
-            translateY: "-5%",
-            opacity: 1,
-            ease: "circ.inOut",
+        const rep_tl = gsap.timeline({
             scrollTrigger: {
-                trigger: "#repertory_text",
-                start: "10% 30%",
-                end: "center top",
-                scrub: true,
+                trigger: "#repertory_section",
+                start: "top top",
+                end: "+=100%",
+                pin: true,
+                scrub: 1,
             },
         });
 
-        rep_tl.to("#repertory_text",
-            {
-                scrollTrigger: {
-                    trigger: ".text_right",
-                    start: "top 10%",
-                    end: "bottom+=1500 85%",
-                    scrub: true,
-                    pin: "#repertory_text, .repertory",
-                    pinSpacing: true,
-                },
-            })
 
-        rep_tl.fromTo("#piano_with_hands, #repertory_text",
-            {
-                opacity: 1,
-            },
+        rep_tl.fromTo("#repertory_text",
             {
                 opacity: 0,
+            },
+            {
+                opacity: 1,
                 ease: "circ.inOut",
-                scrollTrigger: {
-                    trigger: "#repertory_section",
-                    start: "83% bottom",
-                    end: "90% center",
-                    scrub: true,
+            })
+            .fromTo(".piano_silhouette", {
+                opacity: 0,
+            }, {
+                opacity: 1,
+                ease: "circ.inOut",
+            }, "<")
+            .fromTo(".piano_silhouette, #repertory_text",
+                {
+                    opacity: 1,
                 },
-            });
+                {
+                    opacity: 0,
+                    ease: "circ.inOut",
+                });
 
-        master_tl.add(rep_tl, ">-1");
+        master_tl.add(rep_tl, ">");
 
         // Animations Next Songs
 
         const next_songs_tl = gsap.timeline(
             {
                 scrollTrigger: {
-                    trigger: "#next_songs_container",
+                    trigger: "#next_songs_section",
                     start: "top top",
                     end: "+=250%",
                     pin: true,

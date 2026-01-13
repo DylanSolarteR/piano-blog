@@ -2,13 +2,14 @@
 import ArrowSVG from "@/assets/svg/vectorarrow.svg";
 
 import PianoWithHands from "@/assets/svg/Piano_with_hands.svg";
+import PianoSilhouette from "@/assets/svg/piano_silhouette.svg";
 ---
 
 <div class="repertory">
   <div id="repertory_text">
     <h2 class="text_right">Please, listen to the pieces i’ve learned.</h2>
-    <a class="hipervinculo_repertorio a-link"
-      ><span>Repertory</span><ArrowSVG
+    <a class="hipervinculo_repertorio"
+      ><span class="a-link">Repertory</span><ArrowSVG
         width={50}
         height={50}
         class="arrow_right"
@@ -16,74 +17,94 @@ import PianoWithHands from "@/assets/svg/Piano_with_hands.svg";
     </a>
   </div>
   <div id="rep_svg_container">
-    <PianoWithHands id="piano_with_hands" preserveAspectRatio="none" />
+    <PianoSilhouette class="piano_silhouette" preserveAspectRatio="none" />
   </div>
+
+  <!-- <div id="rep_svg_container_mobile">
+    <PianoWithHands class="piano_with_hands" preserveAspectRatio="none" />
+  </div> -->
 </div>
 
 <style>
   .repertory {
     position: relative;
-    max-width: 100dvw;
-    width: 100%;
-    min-height: 100dvh;
-    height: fit-content;
-    margin: 40rem 0;
+    width: 100dvw;
+    height: 100dvh;
+    background-color: #161616;
+    display: flex;
+    justify-content: center;
   }
 
   #repertory_text {
     display: flex;
     flex-direction: column;
-    justify-content: start;
     align-items: end;
-    gap: 4rem;
-    padding: 28rem 0rem;
-    position: absolute;
-    top: 0;
-    right: 0;
+    gap: 1rem;
     z-index: 1;
-  }
-
-  #rep_svg_container {
-    width: 100%;
-    max-width: 100dvw;
+    max-height: 40%;
     position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  #piano_with_hands {
-    width: 100%;
-    translate: -20% 0%;
-    scale: 0.5;
+    top: 5%;
+    right: 5%;
   }
 
   .text_right {
-    font-size: 8rem;
+    font-size: clamp(3rem, 8vw, 6rem);
     font-weight: bold;
-    max-width: 65%;
+    max-width: 60%;
     color: white;
     z-index: 1;
     text-align: end;
     text-wrap: balance;
     align-self: end;
-    padding-right: clamp(2rem, 5vw, 5rem);
+    padding-top: clamp(4rem, 10vw, 6rem);
+    text-shadow: 8px 8px 16px #161616;
   }
 
   .hipervinculo_repertorio {
     color: white;
     vertical-align: middle;
-    font-size: 3rem;
+    font-size: clamp(1.5rem, 3vw, 3rem);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1;
-    gap: 1rem;
-    margin-right: clamp(2rem, 5vw, 5rem);
+    gap: clamp(0.125rem, 3vw, 1rem);
+    text-shadow: 4px 4px 8px #161616;
   }
 
   .hipervinculo_repertorio > .arrow_right {
-    width: 40px;
-    height: 40px;
-    translate: 0px 5px;
+    width: clamp(20px, 4vw, 40px);
+    height: clamp(20px, 4vw, 40px);
+    translate: 0px 3px;
+  }
+
+  #rep_svg_container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: max(300px, 40dvw);
+    height: auto;
+    z-index: 0;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin: clamp(2rem, 4vw, 12rem) clamp(0rem, 4vw, 8rem);
+  }
+  .piano_silhouette {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (width<=768px) {
+    #repertory_text {
+      top: 4%;
+      right: 4%;
+    }
+  }
+
+  @media (height>=768px) and (width>=380px) {
+    .text_right {
+      max-width: 80%;
+    }
   }
 </style>
