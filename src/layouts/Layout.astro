@@ -43,7 +43,10 @@ import { ClientRouter } from "astro:transitions";
 
         const video = document.getElementById("intro-video");
         const videoContainer = document.getElementById("video-container");
-        if (!video) return;
+        if (!video) {
+          window.dispatchEvent(new Event("intro-video-ended"));
+          return;
+        }
 
         video.addEventListener("timeupdate", () => {
           if (video.currentTime >= 3.35) {

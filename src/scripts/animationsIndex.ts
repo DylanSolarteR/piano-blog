@@ -21,9 +21,8 @@ export function loadAnimationsIndex() {
             height: "100%",
             duration: 1,
             ease: "power2.inOut",
-        }),
-
-            hero_tl.fromTo(
+        })
+            .fromTo(
                 "#horizontal_lines .horizontal_line",
                 { width: "0%" },
                 {
@@ -32,83 +31,75 @@ export function loadAnimationsIndex() {
                     stagger: 0.2,
                     ease: "power2.inOut",
                 }
-            );
-
-        hero_tl.fromTo(
-            ".clave-svg-path",
-            { strokeDashoffset: gsap.getProperty(".clave-svg-path", "strokeDasharray") },
-            {
-                strokeDashoffset: 0,
-                duration: 4,
-                ease: "power2.inOut",
-            },
-            ">"
-        );
-
-        hero_tl.fromTo(
-            ".title-text path",
-            { strokeDashoffset: gsap.getProperty(".title-text path", "strokeDasharray") },
-            {
-                strokeDashoffset: 0,
-                duration: 3,
-                stagger: 0.2,
-                ease: "power2.inOut",
-            }, "<"
-        );
-
-        // Luz
-        hero_tl.fromTo(
-            "#light-beam",
-            { opacity: 0 },
-            {
-                opacity: 1,
-                duration: 1.2,
-                ease: "power3.out"
-            },
-            "<"
-        )
-
-        hero_tl.fromTo(
-            ".clave-svg-path, .title-text path",
-            { fill: "transparent" },
-            {
-                fill: "white",
-                duration: 2,
-                ease: "power2.inOut",
-            },
-            ">"
-        );
-
-        hero_tl.fromTo(
-            "#arrow_down_hero",
-            { opacity: 0, y: 50 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 2,
-                ease: "power2.out",
-            }
-            , ">-1"
-        );
-
-        hero_tl.to("#arrow_down_hero", {
-            y: 15,
-            repeat: -1,
-            yoyo: true,
-            ease: "power1.inOut",
-            duration: 1,
-        });
-
-        hero_tl.to("#hero", {
-            opacity: 0,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#hero",
-                start: "top top",
-                end: "bottom center",
-                scrub: true,
-            },
-        });
+            )
+            .fromTo(
+                ".clave-svg-path",
+                { strokeDashoffset: gsap.getProperty(".clave-svg-path", "strokeDasharray") },
+                {
+                    strokeDashoffset: 0,
+                    duration: 4,
+                    ease: "power2.inOut",
+                },
+                ">"
+            )
+            .fromTo(
+                ".title-text path",
+                { strokeDashoffset: gsap.getProperty(".title-text path", "strokeDasharray") },
+                {
+                    strokeDashoffset: 0,
+                    duration: 3,
+                    stagger: 0.2,
+                    ease: "power2.inOut",
+                }, "<"
+            )
+            .fromTo(
+                "#light-beam", // Luz
+                { opacity: 0 },
+                {
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: "power3.out"
+                },
+                "<"
+            )
+            .fromTo(
+                ".clave-svg-path, .title-text path",
+                { fill: "transparent" },
+                {
+                    fill: "white",
+                    duration: 2,
+                    ease: "power2.inOut",
+                },
+                ">"
+            )
+            .fromTo(
+                "#arrow_down_hero",
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 2,
+                    ease: "power2.out",
+                }
+                , ">-1"
+            )
+            .to("#arrow_down_hero", {
+                y: 15,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut",
+                duration: 1,
+            })
+            .to("#hero", {
+                opacity: 0,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#hero",
+                    start: "top top",
+                    end: "bottom center",
+                    scrub: true,
+                },
+            });
         master_tl.add(hero_tl);
 
         // About Me Animations
@@ -129,7 +120,7 @@ export function loadAnimationsIndex() {
             scrollTrigger: {
                 trigger: ".about_me",
                 start: "top top",
-                end: "+=1000%",
+                end: "+=900%",
                 pin: true,
                 scrub: 1,
                 anticipatePin: 1,
@@ -138,9 +129,10 @@ export function loadAnimationsIndex() {
         })
 
         about_me_tl.fromTo(
-            "#piano_vertical_3d", {
-            x: "-300%",
-        },
+            "#piano_vertical_3d",
+            {
+                x: "-300%",
+            },
             {
                 x: "-50%",
                 ease: "circ.inOut",
@@ -155,14 +147,14 @@ export function loadAnimationsIndex() {
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 1,
+                    duration: 0.5,
                     ease: "power2.inOut",
                 }, ">"
             )
             .to("#abme_text_container > h2:nth-child(1)", {
                 opacity: 0,
                 y: 100,
-                duration: 1,
+                duration: 0.5,
                 ease: "power2.in",
             }, ">1")
             .fromTo(
@@ -172,9 +164,9 @@ export function loadAnimationsIndex() {
                 },
                 {
                     x: "450%",
-                    duration: 2,
+                    duration: 1,
                     ease: "circ.inOut",
-                })
+                }, ">")
             .fromTo(
                 "#abme_text_container > h2:nth-child(2)",
                 {
@@ -184,14 +176,14 @@ export function loadAnimationsIndex() {
                 {
                     opacity: 1,
                     y: 0,
-                    duration: 1,
+                    duration: 0.5,
                     ease: "power2.inOut",
                 }, ">"
             )
             .to("#abme_text_container > h2:nth-child(2)", {
                 opacity: 0,
                 y: 100,
-                duration: 1,
+                duration: 0.5,
                 ease: "power2.in",
             }, ">1")
             .fromTo(
@@ -202,7 +194,7 @@ export function loadAnimationsIndex() {
                 {
                     x: "-50%",
                     ease: "circ.inOut",
-                    duration: 2,
+                    duration: 1,
                 })
             .fromTo(
                 "#abme_text_container > h2:nth-child(3)",
@@ -213,14 +205,14 @@ export function loadAnimationsIndex() {
                 {
                     opacity: 1,
                     y: 0,
-                    duration: 1,
+                    duration: 0.5,
                     ease: "power2.inOut",
                 }, ">"
             )
             .to("#abme_text_container > h2:nth-child(3)", {
                 opacity: 0,
                 y: 100,
-                duration: 1,
+                duration: 0.5,
                 ease: "power2.in",
             }, ">1")
             .fromTo(
@@ -231,19 +223,19 @@ export function loadAnimationsIndex() {
                 {
                     x: "200%",
                     ease: "circ.inOut",
-                    duration: 2,
+                    duration: 1,
                 })
             .to("#svg-wrapper",
                 {
                     scale: 10,
                     ease: "circ.inOut",
-                    duration: 1,
+                    duration: 0.5,
                 }, ">")
             .to("#svg-wrapper", {
                 opacity: 0,
                 zIndex: -1,
                 ease: "circ.inOut",
-                duration: 1,
+                duration: 0.5,
             }, "<1")
             .to(
                 ".about_me, #body",
@@ -270,7 +262,7 @@ export function loadAnimationsIndex() {
             scrollTrigger: {
                 trigger: "#repertory_section",
                 start: "top top",
-                end: "+=100%",
+                end: "+=50%",
                 pin: true,
                 scrub: 1,
                 anticipatePin: 1,
@@ -285,12 +277,14 @@ export function loadAnimationsIndex() {
             },
             {
                 opacity: 1,
+                duration: 1,
                 ease: "circ.inOut",
             })
             .fromTo(".piano_silhouette", {
                 opacity: 0,
             }, {
                 opacity: 1,
+                duration: 1,
                 ease: "circ.inOut",
             }, "<")
             .fromTo(".piano_silhouette, #repertory_text",
@@ -299,6 +293,7 @@ export function loadAnimationsIndex() {
                 },
                 {
                     opacity: 0,
+                    duration: 1,
                     ease: "circ.inOut",
                 });
 
@@ -311,7 +306,7 @@ export function loadAnimationsIndex() {
                 scrollTrigger: {
                     trigger: "#next_songs_section",
                     start: "top top",
-                    end: "+=250%",
+                    end: "+=200%",
                     pin: true,
                     scrub: 1,
                     anticipatePin: 1,
