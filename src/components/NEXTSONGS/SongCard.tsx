@@ -561,26 +561,6 @@ export default function SongCardClient({
             <div className="progressFill" />
           </div>
         </div>
-        {/* <div id="buttons-next-prev" data-no-swipe>
-          <button
-            className="button-change-song"
-            onClick={() => {
-              dirRef.current = "prev";
-              changeToPrevSong();
-            }}
-          >
-            {"<"}
-          </button>
-          <button
-            className="button-change-song"
-            onClick={() => {
-              dirRef.current = "next";
-              changeToNextSong();
-            }}
-          >
-            {">"}
-          </button>
-        </div> */}
       </div>
 
       <div id="song-info" data-no-swipe>
