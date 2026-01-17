@@ -1,7 +1,8 @@
-import { init_gsap_context } from "./gsap_init";
+import { initPlugins, init_gsap_context } from "./initPlugins";
 
 
 export function loadAnimationsIndex() {
+    initPlugins
     const gsap_ctx = init_gsap_context();
 
     gsap_ctx?.add(() => {
@@ -131,6 +132,8 @@ export function loadAnimationsIndex() {
                 end: "+=1000%",
                 pin: true,
                 scrub: 1,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
             },
         })
 
@@ -270,6 +273,8 @@ export function loadAnimationsIndex() {
                 end: "+=100%",
                 pin: true,
                 scrub: 1,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
             },
         });
 
@@ -309,6 +314,8 @@ export function loadAnimationsIndex() {
                     end: "+=250%",
                     pin: true,
                     scrub: 1,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
                 },
             }
         );
