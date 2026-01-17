@@ -14,8 +14,13 @@ export default function NextSongsPlayerClient({
   function changeSong(id: number) {
     setCurrentSongId(id);
   }
-
   const current = nextSongs[currentSongId];
+  const changeToPrevSong = () => {
+    changeSong((currentSongId - 1 + nextSongs.length) % nextSongs.length);
+  };
+  const changeToNextSong = () => {
+    changeSong((currentSongId + 1) % nextSongs.length);
+  };
 
   return (
     <div id="next-songs-container" className="song-player-container">
@@ -26,6 +31,8 @@ export default function NextSongsPlayerClient({
           imagePreviewUrl={current.imagePreviewUrl}
           songFileName={current.songFileName}
           url={current.url}
+          changeToPrevSong={changeToPrevSong}
+          changeToNextSong={changeToNextSong}
         />
       </aside>
       <section id="other-songs-container-wrapper">

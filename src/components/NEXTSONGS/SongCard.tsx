@@ -16,12 +16,12 @@ type Props = Pick<
 
 const SONG_URLS = import.meta.glob(
   "/src/assets/songs/nextsongs/*.{mp3,wav,ogg,flac}",
-  { eager: true, query: "?url", import: "default" }
+  { eager: true, query: "?url", import: "default" },
 ) as Record<string, string>;
 
 function getSongUrl(songFileName: string) {
   const match = Object.entries(SONG_URLS).find(([path]) =>
-    path.endsWith("/" + songFileName)
+    path.endsWith("/" + songFileName),
   );
   return match?.[1];
 }
@@ -32,7 +32,9 @@ export default function SongCardClient({
   url,
   imagePreviewUrl,
   songFileName,
-}: Props) {
+  changeToPrevSong,
+  changeToNextSong,
+}: Props & { changeToPrevSong: () => void; changeToNextSong: () => void }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [playing, setPlaying] = useState(false);
@@ -49,9 +51,17 @@ export default function SongCardClient({
   function renderAnimation() {
     gsap.fromTo(
       "#SongCardClient",
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 0.5, ease: "power1.inOut" }
+      { opacity: 0 },
+      { opacity: 1, duration: 0.5, ease: "power1.inOut" },
     );
+  }
+
+  function unmountAnimation() {
+    gsap.to("#SongCardClient", {
+      opacity: 0,
+      duration: 0.5,
+      ease: "power1.inOut",
+    });
   }
 
   async function toggle() {
@@ -286,7 +296,26 @@ export default function SongCardClient({
           <div className="progressFill" />
         </div>
       </div>
-
+      <div id="buttons-next-prev">
+        <button
+          className="button-change-song"
+          onClick={() => {
+            unmountAnimation();
+            changeToPrevSong();
+          }}
+        >
+          {"<"}
+        </button>
+        <button
+          className="button-change-song"
+          onClick={() => {
+            unmountAnimation();
+            changeToNextSong();
+          }}
+        >
+          {">"}
+        </button>
+      </div>
       <div id="song-info">
         <h2 title={title}>{title}</h2>
         <h3 title={author}>{author}</h3>
