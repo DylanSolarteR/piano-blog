@@ -14,6 +14,18 @@ type Props = Pick<
   "title" | "author" | "imagePreviewUrl" | "songFileName" | "url"
 >;
 
+const SONG_URLS = import.meta.glob(
+  "/src/assets/songs/nextsongs/*.{mp3,wav,ogg,flac}",
+  { eager: true, query: "?url", import: "default" }
+) as Record<string, string>;
+
+function getSongUrl(songFileName: string) {
+  const match = Object.entries(SONG_URLS).find(([path]) =>
+    path.endsWith("/" + songFileName)
+  );
+  return match?.[1];
+}
+
 export default function SongCardClient({
   title,
   author,
@@ -165,7 +177,7 @@ export default function SongCardClient({
 
         <audio
           ref={audioRef}
-          src={`/src/assets/songs/nextsongs/${songFileName}`}
+          src={getSongUrl(songFileName)}
           preload="metadata"
           onLoadStart={() => setLoading(true)}
           onWaiting={() => setLoading(true)}
