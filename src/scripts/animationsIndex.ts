@@ -357,6 +357,9 @@ export function loadAnimationsIndex() {
                 pointerEvents: "auto",
                 duration: 1,
                 ease: "power2.inOut",
+                onStart: () => {
+                    window.dispatchEvent(new CustomEvent("songs-player-ready"));
+                },
             });
         master_tl.add(next_songs_tl, ">");
     });

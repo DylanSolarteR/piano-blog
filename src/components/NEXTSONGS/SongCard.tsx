@@ -36,6 +36,7 @@ export default function SongCardClient({
   changeToNextSong,
 }: Props & { changeToPrevSong: () => void; changeToNextSong: () => void }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   // --- Crossfade background layers ---
   const bgARef = useRef<HTMLDivElement | null>(null);
@@ -49,6 +50,7 @@ export default function SongCardClient({
   const swipeStartY = useRef<number | null>(null);
   const isDraggingRef = useRef(false);
   const swipeCanceledRef = useRef(false);
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
 
   // Direccion del cambio (para animacion lateral)
   const dirRef = useRef<"next" | "prev">("next");
@@ -186,10 +188,12 @@ export default function SongCardClient({
 
     if (dx < 0) {
       // swipe left -> next
+      sessionStorage.setItem("player_swiped", "1");
       dirRef.current = "next";
       changeToNextSong();
     } else {
       // swipe right -> prev
+      sessionStorage.setItem("player_swiped", "1");
       dirRef.current = "prev";
       changeToPrevSong();
     }
@@ -366,6 +370,49 @@ export default function SongCardClient({
     return () => mq.removeEventListener("change", update);
   }, []);
 
+  //for hint swipe
+  //catches the event when the player's opacity animation ends
+  useEffect(() => {
+    const onReady = () => setIsPlayerReady(true);
+    window.addEventListener("songs-player-ready", onReady);
+
+    return () => {
+      window.removeEventListener("songs-player-ready", onReady);
+    };
+  }, []);
+
+  // Hint swipe animation
+  useEffect(() => {
+    if (!isPlayerReady) return;
+    if (!cardRef.current) return;
+
+    const alreadySwiped = sessionStorage.getItem("player_swiped") === "1";
+    const hintShown = sessionStorage.getItem("player_hint_shown") === "1";
+    if (alreadySwiped || hintShown) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(max-width: 768px)", () => {
+      const a = bgARef.current;
+      const img = a?.querySelector(".card-bg-image") as HTMLElement | null;
+      if (!img) return;
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power1.inOut" },
+        onComplete: () => {
+          sessionStorage.setItem("player_hint_shown", "1");
+        },
+      });
+
+      tl.to(img, { x: 10, duration: 0.22 })
+        .to(img, { x: 0, duration: 0.22 })
+        .to(img, { x: 10, duration: 0.22 }, "+=0.05")
+        .to(img, { x: 0, duration: 0.22 });
+    });
+
+    return () => mm.revert();
+  }, [isPlayerReady]);
+
   useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -374,6 +421,7 @@ export default function SongCardClient({
     <div id="SongCardClient">
       <div
         id="SongCard"
+        ref={cardRef}
         onClick={toggle}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
