@@ -342,15 +342,22 @@ export function loadAnimationsIndex() {
                 {
                     opacity: 0,
                     ease: "circ.inOut",
-                }, ">0.2").fromTo("#songs_player", {
-                    opacity: 0,
-                    pointerEvents: "none",
-                }, {
-                    opacity: 1,
-                    pointerEvents: "auto",
-                    duration: 0.1,
-                    ease: "power2.inOut",
-                }, "<-0.2");
+                }, ">0.2")
+            .fromTo("#songs_player", {
+                opacity: 0,
+                pointerEvents: "none",
+            }, {
+                opacity: 1,
+                pointerEvents: "auto",
+                duration: 0.1,
+                ease: "power2.inOut",
+            }, "<-0.2")
+            .to("#songs_player", {
+                opacity: 1,
+                pointerEvents: "auto",
+                duration: 1,
+                ease: "power2.inOut",
+            });
         master_tl.add(next_songs_tl, ">");
     });
 }
