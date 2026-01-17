@@ -8,13 +8,6 @@ import { ClientRouter } from "astro:transitions";
     <meta charset="UTF-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link
-      rel="preload"
-      href="/intro.mp4"
-      as="video"
-      type="video/mp4"
-      fetchpriority="high"
-    />
     <title>Dylan's Piano Blog</title>
     <meta name="title" content="Dylan's Piano Blog" />
     <meta
@@ -25,7 +18,7 @@ import { ClientRouter } from "astro:transitions";
     <ClientRouter />
   </head>
   <body id="body">
-    <!-- <div id="video-container">
+    <div id="video-container">
       <video
         id="intro-video"
         src="/Intro.mp4"
@@ -33,47 +26,118 @@ import { ClientRouter } from "astro:transitions";
         muted
         playsinline
         preload="auto"></video>
-    </div> -->
+    </div>
     <slot />
 
-    <!-- <script is:inline>
+    <script is:inline>
       window.addEventListener("DOMContentLoaded", () => {
-        // Prevent scrolling while the intro video is playing
-        document.body.style.overflow = "hidden";
-
         const video = document.getElementById("intro-video");
-        const videoContainer = document.getElementById("video-container");
-        if (!video) {
-          window.dispatchEvent(new Event("intro-video-ended"));
+        const container = document.getElementById("video-container");
+
+        const endIntro = () => {
+          container.classList.add("is-ending");
+          setTimeout(() => {
+            container.style.display = "none";
+            document.body.style.overflow = "auto";
+            window.dispatchEvent(new Event("intro-video-ended"));
+          }, 320);
+        };
+
+        if (!video || !container) {
+          endIntro();
           return;
         }
 
-        video.addEventListener("timeupdate", () => {
-          if (video.currentTime >= 3.35) {
-            videoContainer.style.backgroundColor = "black";
-            video.removeEventListener("timeupdate", this);
+        document.body.style.overflow = "hidden";
+
+        const MAX_START_WAIT_MS = 2500; // fallback si NO hay señal de arranque
+        const MAX_TOTAL_INTRO_MS = 9000; // failsafe total
+
+        let started = false;
+
+        const cleanup = () => {
+          video.removeEventListener("play", onAnyStart);
+          video.removeEventListener("playing", onAnyStart);
+          video.removeEventListener("ended", onEnded);
+          video.removeEventListener("error", onError);
+        };
+
+        const cancelStartTimeout = () => {
+          if (startTimeoutId) clearTimeout(startTimeoutId);
+          startTimeoutId = null;
+        };
+
+        const markStarted = () => {
+          if (started) return;
+          started = true;
+          cancelStartTimeout();
+
+          // Tu cambio de fondo a negro a los 3.35s (sin timeupdate)
+          const t = 3.35;
+          const check = () => {
+            if (video.currentTime >= t)
+              container.style.backgroundColor = "black";
+            else requestAnimationFrame(check);
+          };
+          requestAnimationFrame(check);
+        };
+
+        const onAnyStart = () => {
+          // "play" suele disparar antes que "playing"
+          markStarted();
+        };
+
+        const onEnded = () => {
+          cleanup();
+          endIntro();
+        };
+
+        const onError = () => {
+          cleanup();
+          endIntro();
+        };
+
+        video.addEventListener("play", onAnyStart);
+        video.addEventListener("playing", onAnyStart);
+        video.addEventListener("ended", onEnded, { once: true });
+        video.addEventListener("error", onError, { once: true });
+
+        // 1) Timeout: si no hay ninguna señal de arranque en X ms → fallback
+        let startTimeoutId = setTimeout(() => {
+          if (!started) {
+            cleanup();
+            try {
+              video.pause();
+            } catch {}
+            endIntro();
           }
-        });
+        }, MAX_START_WAIT_MS);
 
-        video.addEventListener("ended", () => {
-          document.body.style.overflow = "auto";
-          videoContainer.style.display = "none";
-          window.dispatchEvent(new Event("intro-video-ended"));
-          return;
-        });
-
-        //if dom content has loaded but video hasn't downloaded yet, skip intro after 5 seconds
+        // 2) Failsafe total
         setTimeout(() => {
-          if (!video.complete || video.readyState < 4) {
+          cleanup();
+          try {
             video.pause();
-            document.body.style.overflow = "auto";
-            videoContainer.style.display = "none";
-            console.log("Intro video skipped due to timeout");
-            window.dispatchEvent(new Event("intro-video-ended"));
+          } catch {}
+          endIntro();
+        }, MAX_TOTAL_INTRO_MS);
+
+        // 3) Intento de play: si resuelve, también lo consideramos "arrancó"
+        (async () => {
+          try {
+            const p = video.play();
+            if (p && typeof p.then === "function") await p;
+
+            // Si play() resolvió, casi seguro ya arrancó o está por arrancar.
+            // Marcamos started para evitar falsos fallbacks.
+            markStarted();
+          } catch {
+            cleanup();
+            endIntro();
           }
-        }, 4200);
+        })();
       });
-    </script> -->
+    </script>
     <script src="../scripts/initPlugins.ts"></script>
   </body>
 </html>
@@ -152,7 +216,17 @@ import { ClientRouter } from "astro:transitions";
     justify-content: center;
     align-items: center;
     background-color: white;
-    transition: background-color 0.2s linear;
+    transition:
+      background-color 0.2s linear,
+      opacity 300ms ease;
+    opacity: 1;
+
+    pointer-events: none;
+  }
+
+  #video-container.is-ending {
+    opacity: 0;
+    pointer-events: none;
   }
 
   #intro-video {
