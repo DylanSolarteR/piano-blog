@@ -19,12 +19,29 @@
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-#SongCard .card-image {
-  width: 100%;
-  height: 100%;
+#SongCard .card-bg {
+  position: absolute;
+  inset: 0;
   border-radius: 20px;
-  object-fit: cover;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
 }
+
+#SongCard .card-bg-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  will-change: transform, opacity;
+}
+
+#SongCard .card-content {
+  position: relative;
+  z-index: 1;
+}
+
 
 #play-pause-icon {
   position: absolute;
@@ -225,6 +242,14 @@
     cursor: pointer;
     border-radius: 0px;
     box-shadow: none;
+  }
+
+  #SongCard .card-bg {
+    border-radius: 0px;
+  }
+
+  #SongCard .card-bg-layer {
+    border-radius: 0px;
   }
 
   #progress-track {

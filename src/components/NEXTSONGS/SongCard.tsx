@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import type { Song } from "./types";
 import Play from "@/assets/svg/Play_vector.svg?react";
 import Pause from "@/assets/svg/Pause_vector.svg?react";
@@ -37,6 +37,17 @@ export default function SongCardClient({
 }: Props & { changeToPrevSong: () => void; changeToNextSong: () => void }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // --- Crossfade background layers ---
+  const bgARef = useRef<HTMLDivElement | null>(null);
+  const bgBRef = useRef<HTMLDivElement | null>(null);
+
+  const [bgAUrl, setBgAUrl] = useState<string>(imagePreviewUrl.src);
+  const [bgBUrl, setBgBUrl] = useState<string | null>(null);
+
+  // Guardamos la direccion del cambio (para animacion lateral)
+  const dirRef = useRef<"next" | "prev">("next");
+  const bgAnimatingRef = useRef(false);
+
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
@@ -47,22 +58,6 @@ export default function SongCardClient({
   const [muted, setMuted] = useState(false);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const volumeWrapRef = useRef<HTMLDivElement | null>(null);
-
-  function renderAnimation() {
-    gsap.fromTo(
-      "#SongCardClient",
-      { opacity: 0 },
-      { opacity: 1, duration: 0.5, ease: "power1.inOut" },
-    );
-  }
-
-  function unmountAnimation() {
-    gsap.to("#SongCardClient", {
-      opacity: 0,
-      duration: 0.5,
-      ease: "power1.inOut",
-    });
-  }
 
   async function toggle() {
     const a = audioRef.current;
@@ -170,152 +165,216 @@ export default function SongCardClient({
 
       if (hasMounted) {
         toggle();
-        renderAnimation();
       }
     }
   }, [songFileName]);
 
+  // Background crossfade on image change
   useEffect(() => {
-    renderAnimation();
+    const nextUrl = imagePreviewUrl.src;
+
+    if (!hasMounted) {
+      setBgAUrl(nextUrl);
+      return;
+    }
+
+    if (bgAnimatingRef.current) return;
+
+    setBgBUrl(nextUrl);
+  }, [imagePreviewUrl.src, hasMounted]);
+
+  useLayoutEffect(() => {
+    if (!bgBUrl) return;
+
+    const a = bgARef.current;
+    const b = bgBRef.current;
+
+    if (!a || !b) return;
+
+    bgAnimatingRef.current = true;
+
+    gsap.set(b, { opacity: 0 });
+    gsap.set(a, { opacity: 1 });
+
+    const tl = gsap.timeline({
+      defaults: { duration: 0.5, ease: "power1.inOut" },
+      onComplete: () => {
+        // Commit
+        setBgAUrl(bgBUrl);
+        setBgBUrl(null);
+
+        // Limpieza
+        gsap.set(a, { clearProps: "transform,opacity" });
+        bgAnimatingRef.current = false;
+      },
+    });
+
+    tl.to(a, { opacity: 0 }, 0).to(b, { opacity: 1 }, 0);
+
+    return () => {
+      tl.kill();
+    };
+  }, [bgBUrl]);
+
+  useEffect(() => {
     setHasMounted(true);
   }, []);
 
   return (
     <div id="SongCardClient">
       <div id="SongCard" onClick={toggle}>
-        <img className="card-image" src={imagePreviewUrl.src} alt={title} />
-
-        <audio
-          ref={audioRef}
-          src={getSongUrl(songFileName)}
-          preload="metadata"
-          onLoadStart={() => setLoading(true)}
-          onWaiting={() => setLoading(true)}
-          onCanPlay={() => setLoading(false)}
-          onPlaying={() => setLoading(false)}
-          onPause={() => setPlaying(false)}
-          onEnded={() => {
-            setPlaying(false);
-            setLoading(false);
-            setCurrentTime(0);
-          }}
-          onError={() => {
-            setLoading(false);
-            setPlaying(false);
-            console.error("audio error loading:", songFileName);
-          }}
-          onLoadedMetadata={(e) => {
-            const a = e.currentTarget;
-            setDuration(Number.isFinite(a.duration) ? a.duration : 0);
-          }}
-          onTimeUpdate={(e) => {
-            setCurrentTime(e.currentTarget.currentTime);
-          }}
-        />
-
-        <div id="play-pause-icon">
-          {loading ? (
-            <Loader id="loader" className="iconSongCard" />
-          ) : playing ? (
-            <Pause className="iconSongCard" />
-          ) : (
-            <Play className="iconSongCard" />
+        {/* <img className="card-image" src={imagePreviewUrl.src} alt={title} /> */}
+        <div className="card-bg" aria-hidden="true">
+          <div
+            ref={bgARef}
+            className="card-bg-layer"
+            style={{ backgroundImage: `url(${bgAUrl})` }}
+          />
+          {bgBUrl && (
+            <div
+              ref={bgBRef}
+              className="card-bg-layer"
+              style={{ backgroundImage: `url(${bgBUrl})` }}
+            />
           )}
         </div>
+        <div className="card-content">
+          <audio
+            ref={audioRef}
+            src={getSongUrl(songFileName)}
+            preload="metadata"
+            onLoadStart={() => setLoading(true)}
+            onWaiting={() => setLoading(true)}
+            onCanPlay={() => setLoading(false)}
+            onPlaying={() => setLoading(false)}
+            onPause={() => setPlaying(false)}
+            onEnded={() => {
+              setPlaying(false);
+              setLoading(false);
+              setCurrentTime(0);
+            }}
+            onError={() => {
+              setLoading(false);
+              setPlaying(false);
+              console.error("audio error loading:", songFileName);
+            }}
+            onLoadedMetadata={(e) => {
+              const a = e.currentTarget;
+              setDuration(Number.isFinite(a.duration) ? a.duration : 0);
+            }}
+            onTimeUpdate={(e) => {
+              setCurrentTime(e.currentTarget.currentTime);
+            }}
+          />
 
-        <div
-          id="right-icons"
-          onClick={(e) => e.stopPropagation()}
-          onPointerDown={(e) => e.stopPropagation()}
-          style={{ pointerEvents: "auto" }}
-        >
-          <div
-            className={`volumeWrap ${isVolumeOpen ? "open" : ""}`}
-            ref={volumeWrapRef}
-          >
-            <button
-              type="button"
-              className="iconBtn"
-              aria-label="Volume"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsVolumeOpen((v) => !v); // tap = toggle
-              }}
-            >
-              {muted || volume === 0 ? (
-                <VolumeCross className="iconSongCard" />
-              ) : (
-                <VolumeLoud className="iconSongCard" />
-              )}
-            </button>
-
-            <div className="volumePopover" onClick={(e) => e.stopPropagation()}>
-              <div
-                className="volumeSlider"
-                role="slider"
-                aria-label="Volume"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={Math.round((muted ? 0 : volume) * 100)}
-                onPointerDown={onVolumePointerDown}
-                onPointerMove={onVolumePointerMove}
-              >
-                <div className="volumeTrack" />
-                <div
-                  className="volumeFill"
-                  style={{ height: `${(muted ? 0 : volume) * 100}%` }}
-                />
-              </div>
-            </div>
+          <div id="play-pause-icon">
+            {loading ? (
+              <Loader id="loader" className="iconSongCard" />
+            ) : playing ? (
+              <Pause className="iconSongCard" />
+            ) : (
+              <Play className="iconSongCard" />
+            )}
           </div>
 
-          <a
-            className="iconBtn"
-            aria-label="Info"
-            href={`${url}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <div
+            id="right-icons"
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()}
+            style={{ pointerEvents: "auto" }}
           >
-            <ExternalLink className="iconSongCard" />
-          </a>
-        </div>
+            <div
+              className={`volumeWrap ${isVolumeOpen ? "open" : ""}`}
+              ref={volumeWrapRef}
+            >
+              <button
+                type="button"
+                className="iconBtn"
+                aria-label="Volume"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsVolumeOpen((v) => !v); // tap = toggle
+                }}
+              >
+                {muted || volume === 0 ? (
+                  <VolumeCross className="iconSongCard" />
+                ) : (
+                  <VolumeLoud className="iconSongCard" />
+                )}
+              </button>
 
-        <div
-          id="progress-track"
-          onClick={(e) => e.stopPropagation()}
-          onPointerDown={(e) => {
-            e.stopPropagation();
-            onProgressPointerDown(e);
-          }}
-          onPointerMove={(e) => {
-            e.stopPropagation();
-            onProgressPointerMove(e);
-          }}
-          style={{ ["--progress" as any]: progress }}
-        >
-          <div className="progressFill" />
+              <div
+                className="volumePopover"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div
+                  className="volumeSlider"
+                  role="slider"
+                  aria-label="Volume"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={Math.round((muted ? 0 : volume) * 100)}
+                  onPointerDown={onVolumePointerDown}
+                  onPointerMove={onVolumePointerMove}
+                >
+                  <div className="volumeTrack" />
+                  <div
+                    className="volumeFill"
+                    style={{ height: `${(muted ? 0 : volume) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <a
+              className="iconBtn"
+              aria-label="Info"
+              href={`${url}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLink className="iconSongCard" />
+            </a>
+          </div>
+
+          <div
+            id="progress-track"
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+              onProgressPointerDown(e);
+            }}
+            onPointerMove={(e) => {
+              e.stopPropagation();
+              onProgressPointerMove(e);
+            }}
+            style={{ ["--progress" as any]: progress }}
+          >
+            <div className="progressFill" />
+          </div>
+        </div>
+        <div id="buttons-next-prev">
+          <button
+            className="button-change-song"
+            onClick={() => {
+              dirRef.current = "prev";
+              changeToPrevSong();
+            }}
+          >
+            {"<"}
+          </button>
+          <button
+            className="button-change-song"
+            onClick={() => {
+              dirRef.current = "next";
+              changeToNextSong();
+            }}
+          >
+            {">"}
+          </button>
         </div>
       </div>
-      <div id="buttons-next-prev">
-        <button
-          className="button-change-song"
-          onClick={() => {
-            unmountAnimation();
-            changeToPrevSong();
-          }}
-        >
-          {"<"}
-        </button>
-        <button
-          className="button-change-song"
-          onClick={() => {
-            unmountAnimation();
-            changeToNextSong();
-          }}
-        >
-          {">"}
-        </button>
-      </div>
+
       <div id="song-info">
         <h2 title={title}>{title}</h2>
         <h3 title={author}>{author}</h3>
