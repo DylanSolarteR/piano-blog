@@ -2,7 +2,7 @@ import { initPlugins, init_gsap_context } from "./initPlugins";
 
 
 export function loadAnimationsIndex() {
-    initPlugins
+    initPlugins()
     const gsap_ctx = init_gsap_context();
 
     gsap_ctx?.add(() => {
