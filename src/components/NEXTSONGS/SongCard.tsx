@@ -4,8 +4,8 @@ import Play from "@/assets/svg/Play_vector.svg?react";
 import Pause from "@/assets/svg/Pause_vector.svg?react";
 import Loader from "@/assets/svg/Loader.svg?react";
 import ExternalLink from "@/assets/svg/external-link.svg?react";
-import VolumeLoud from "@/assets/svg/Volume-loud.svg?react";
-import VolumeCross from "@/assets/svg/Volume-cross.svg?react";
+import VolumeLoud from "@/assets/svg/volume-loud.svg?react";
+import VolumeCross from "@/assets/svg/volume-cross.svg?react";
 import "./SongCard.css";
 import gsap from "gsap";
 

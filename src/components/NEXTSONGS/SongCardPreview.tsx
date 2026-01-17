@@ -1,6 +1,5 @@
 import type { Song } from "./types";
 import "./SongCardpreview.css";
-import { useEffect } from "react";
 
 type SongCardPreviewProps = Omit<Song, "songFileName" | "url"> & {
   currentSongId?: number;
