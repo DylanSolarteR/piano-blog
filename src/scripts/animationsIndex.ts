@@ -135,7 +135,7 @@ export function loadAnimationsIndex() {
             },
             {
                 x: "-50%",
-                ease: "circ.inOut",
+                ease: "power2.inOut",
                 duration: 1,
             })
             .fromTo(
@@ -165,7 +165,7 @@ export function loadAnimationsIndex() {
                 {
                     x: "450%",
                     duration: 1,
-                    ease: "circ.inOut",
+                    ease: "power2.inOut",
                 }, ">")
             .fromTo(
                 "#abme_text_container > h2:nth-child(2)",
@@ -193,7 +193,7 @@ export function loadAnimationsIndex() {
                 },
                 {
                     x: "-50%",
-                    ease: "circ.inOut",
+                    ease: "power2.inOut",
                     duration: 1,
                 })
             .fromTo(
@@ -222,19 +222,19 @@ export function loadAnimationsIndex() {
                 },
                 {
                     x: "200%",
-                    ease: "circ.inOut",
+                    ease: "power2.inOut",
                     duration: 1,
                 })
             .to("#svg-wrapper",
                 {
                     scale: 10,
-                    ease: "circ.inOut",
+                    ease: "power2.inOut",
                     duration: 0.5,
                 }, ">")
             .to("#svg-wrapper", {
                 opacity: 0,
                 zIndex: -1,
-                ease: "circ.inOut",
+                ease: "power2.inOut",
                 duration: 0.5,
             }, "<1")
             .to(
