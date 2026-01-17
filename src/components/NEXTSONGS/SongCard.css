@@ -235,7 +235,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: .125rem;
+    gap: clamp(0.5rem, 1vw, 1rem);
   }
 
   #SongCard {
@@ -279,8 +279,6 @@
 
 #song-info {
   gap: 0.25rem;
-  height: 10%;
-  min-height: 10%;
 }
 
 #SongCard .card-image {
