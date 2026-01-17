@@ -11,9 +11,9 @@ export function loadAnimationsIndex() {
         const master_tl = gsap.timeline({ paused: true });
         const hero_tl = gsap.timeline();
 
-        window.addEventListener("intro-video-ended", () => {
-            master_tl.play();
-        });
+        // window.addEventListener("intro-video-ended", () => {
+        // });
+        master_tl.play();
         // Hero Animations
         hero_tl.fromTo("#vertical_line", {
             height: "0%",
