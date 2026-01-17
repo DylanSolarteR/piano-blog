@@ -32,6 +32,11 @@
   position: absolute;
   inset: 0;
   border-radius: 20px;
+}
+
+#SongCard .card-bg-image {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
   will-change: transform, opacity;
@@ -242,6 +247,7 @@
     cursor: pointer;
     border-radius: 0px;
     box-shadow: none;
+    touch-action: pan-y;
   }
 
   #SongCard .card-bg {
@@ -252,35 +258,39 @@
     border-radius: 0px;
   }
 
-  #progress-track {
-    left: 0rem;
-    right: 0rem;
-    bottom: 0rem;
-    height: 15px;
-    border-radius: 0px;
+  #SongCard .card-bg-image {
+    inset: -6%;
   }
+}
 
-  #progress-track .progressFill {
-    transform-origin: left center;
-    transform: scaleX(var(--progress, 0));
-    border-radius: 0px 999px 999px 0px;
-  }
+#progress-track {
+  left: 0rem;
+  right: 0rem;
+  bottom: 0rem;
+  height: 15px;
+  border-radius: 0px;
+}
 
-  #song-info {
-    gap: 0.25rem;
-    height: 10%;
-    min-height: 10%;
-  }
+#progress-track .progressFill {
+  transform-origin: left center;
+  transform: scaleX(var(--progress, 0));
+  border-radius: 0px 999px 999px 0px;
+}
 
-  #SongCard .card-image {
-    border-radius: 0px;
-  }
+#song-info {
+  gap: 0.25rem;
+  height: 10%;
+  min-height: 10%;
+}
 
-  #song-info h2 {
-    font-size: clamp(1.25rem, 2.5vw + 0.5rem, 2rem);
-  }
+#SongCard .card-image {
+  border-radius: 0px;
+}
 
-  #song-info h3 {
-    font-size: clamp(0.75rem, 2.5vw + 0.25rem, 1rem);
-  }
+#song-info h2 {
+  font-size: clamp(1.25rem, 2.5vw + 0.5rem, 2rem);
+}
+
+#song-info h3 {
+  font-size: clamp(0.75rem, 2.5vw + 0.25rem, 1rem);
 }

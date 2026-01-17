@@ -44,9 +44,17 @@ export default function SongCardClient({
   const [bgAUrl, setBgAUrl] = useState<string>(imagePreviewUrl.src);
   const [bgBUrl, setBgBUrl] = useState<string | null>(null);
 
-  // Guardamos la direccion del cambio (para animacion lateral)
+  // Swipe gesture tracking
+  const swipeStartX = useRef<number | null>(null);
+  const swipeStartY = useRef<number | null>(null);
+  const isDraggingRef = useRef(false);
+  const swipeCanceledRef = useRef(false);
+
+  // Direccion del cambio (para animacion lateral)
   const dirRef = useRef<"next" | "prev">("next");
   const bgAnimatingRef = useRef(false);
+
+  const [isMobile, setIsMobile] = useState(false);
 
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,6 +67,135 @@ export default function SongCardClient({
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const volumeWrapRef = useRef<HTMLDivElement | null>(null);
 
+  // Swipe gestures
+
+  function resetDragVisual() {
+    const a = bgARef.current;
+    if (!a) return;
+
+    const img = a.querySelector(".card-bg-image") as HTMLElement | null;
+    if (!img) return;
+
+    gsap.to(img, {
+      x: 0,
+      duration: 0.25,
+      ease: "power2.out",
+      overwrite: true,
+    });
+  }
+
+  function onPointerDown(e: React.PointerEvent) {
+    if (!isMobile) return;
+    if (bgAnimatingRef.current) return;
+
+    const target = e.target as HTMLElement;
+
+    // Si el gesto inicia sobre un control, no swipea
+    if (target.closest("[data-no-swipe]")) return;
+
+    isDraggingRef.current = true;
+    swipeCanceledRef.current = false;
+
+    swipeStartX.current = e.clientX;
+    swipeStartY.current = e.clientY;
+
+    // Captura el puntero para seguir recibiendo move/up aunque salga del elemento
+    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+  }
+
+  function onPointerMove(e: React.PointerEvent) {
+    if (!isMobile) return;
+    if (bgAnimatingRef.current) return;
+    if (!isDraggingRef.current) return;
+    if (swipeStartX.current === null || swipeStartY.current === null) return;
+
+    const dx = e.clientX - swipeStartX.current;
+    const dy = e.clientY - swipeStartY.current;
+
+    // Si el usuario claramente está scrolleando vertical, no hacemos feedback
+    if (Math.abs(dy) > Math.abs(dx) * 1.2) {
+      swipeCanceledRef.current = true;
+      resetDragVisual();
+      return;
+    }
+
+    const a = bgARef.current;
+    if (!a) return;
+
+    // Resistencia: limita el movimiento visual
+    const maxPx = 90;
+    const limited = Math.max(-maxPx, Math.min(maxPx, dx));
+
+    // Parallax + leve dim
+    const img = a.querySelector(".card-bg-image") as HTMLElement | null;
+    if (!img) return;
+
+    gsap.set(img, {
+      x: limited * 0.35,
+      overwrite: true,
+    });
+  }
+
+  function onPointerUp(e: React.PointerEvent) {
+    if (!isMobile) return;
+
+    // Si no estabas en drag, nada
+    if (!isDraggingRef.current) return;
+
+    isDraggingRef.current = false;
+
+    //Swipe cancelado por scroll vertical
+    if (swipeCanceledRef.current) {
+      swipeCanceledRef.current = false;
+      swipeStartX.current = null;
+      swipeStartY.current = null;
+      return;
+    }
+
+    if (bgAnimatingRef.current) {
+      swipeStartX.current = null;
+      swipeStartY.current = null;
+      return;
+    }
+
+    if (swipeStartX.current === null || swipeStartY.current === null) {
+      resetDragVisual();
+      return;
+    }
+
+    const dx = e.clientX - swipeStartX.current;
+    const dy = e.clientY - swipeStartY.current;
+
+    swipeStartX.current = null;
+    swipeStartY.current = null;
+
+    const minSwipePx = 60;
+
+    // Si no es suficientemente horizontal o no supera umbral: vuelve al centro
+    const isHorizontal = Math.abs(dx) > Math.abs(dy);
+    const passed = isHorizontal && Math.abs(dx) >= minSwipePx;
+
+    if (!passed) {
+      resetDragVisual();
+      return;
+    }
+
+    // IMPORTANTE: vuelve al centro antes del cambio real
+    // (el crossfade “real” se encargará del resto)
+    resetDragVisual();
+
+    if (dx < 0) {
+      // swipe left -> next
+      dirRef.current = "next";
+      changeToNextSong();
+    } else {
+      // swipe right -> prev
+      dirRef.current = "prev";
+      changeToPrevSong();
+    }
+  }
+
+  //toggle player
   async function toggle() {
     const a = audioRef.current;
     if (!a) return;
@@ -195,6 +332,8 @@ export default function SongCardClient({
 
     gsap.set(b, { opacity: 0 });
     gsap.set(a, { opacity: 1 });
+    gsap.set(a.querySelector(".card-bg-image"), { x: 0 });
+    gsap.set(b.querySelector(".card-bg-image"), { x: 0 });
 
     const tl = gsap.timeline({
       defaults: { duration: 0.5, ease: "power1.inOut" },
@@ -216,26 +355,45 @@ export default function SongCardClient({
     };
   }, [bgBUrl]);
 
+  // Detecta mobile
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+
+    const update = () => setIsMobile(mq.matches);
+    update();
+
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
   return (
     <div id="SongCardClient">
-      <div id="SongCard" onClick={toggle}>
-        {/* <img className="card-image" src={imagePreviewUrl.src} alt={title} /> */}
+      <div
+        id="SongCard"
+        onClick={toggle}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+      >
         <div className="card-bg" aria-hidden="true">
-          <div
-            ref={bgARef}
-            className="card-bg-layer"
-            style={{ backgroundImage: `url(${bgAUrl})` }}
-          />
-          {bgBUrl && (
+          <div ref={bgARef} className="card-bg-layer">
             <div
-              ref={bgBRef}
-              className="card-bg-layer"
-              style={{ backgroundImage: `url(${bgBUrl})` }}
+              className="card-bg-image"
+              style={{ backgroundImage: `url(${bgAUrl})` }}
             />
+          </div>
+          {bgBUrl && (
+            <div ref={bgBRef} className="card-bg-layer">
+              <div
+                className="card-bg-image"
+                style={{ backgroundImage: `url(${bgBUrl})` }}
+              />
+            </div>
           )}
         </div>
         <div className="card-content">
@@ -267,7 +425,7 @@ export default function SongCardClient({
             }}
           />
 
-          <div id="play-pause-icon">
+          <div id="play-pause-icon" data-no-swipe>
             {loading ? (
               <Loader id="loader" className="iconSongCard" />
             ) : playing ? (
@@ -279,6 +437,7 @@ export default function SongCardClient({
 
           <div
             id="right-icons"
+            data-no-swipe
             onClick={(e) => e.stopPropagation()}
             onPointerDown={(e) => e.stopPropagation()}
             style={{ pointerEvents: "auto" }}
@@ -339,6 +498,7 @@ export default function SongCardClient({
 
           <div
             id="progress-track"
+            data-no-swipe
             onClick={(e) => e.stopPropagation()}
             onPointerDown={(e) => {
               e.stopPropagation();
@@ -353,7 +513,7 @@ export default function SongCardClient({
             <div className="progressFill" />
           </div>
         </div>
-        <div id="buttons-next-prev">
+        {/* <div id="buttons-next-prev" data-no-swipe>
           <button
             className="button-change-song"
             onClick={() => {
@@ -372,10 +532,10 @@ export default function SongCardClient({
           >
             {">"}
           </button>
-        </div>
+        </div> */}
       </div>
 
-      <div id="song-info">
+      <div id="song-info" data-no-swipe>
         <h2 title={title}>{title}</h2>
         <h3 title={author}>{author}</h3>
       </div>
